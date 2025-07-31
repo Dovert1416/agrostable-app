@@ -24,27 +24,57 @@
       justify-content: flex-start;
       line-height: 1.6;
     }
-    /* HERO SECTION */
+    
+    /* SELECTOR DE IDIOMAS - ARREGLADO */
+    .language-selector {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+        background: rgba(255,255,255,0.95);
+        padding: 10px 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        border: 1px solid rgba(76,175,80,0.2);
+        backdrop-filter: blur(10px);
+    }
+    .language-selector select {
+        background: transparent;
+        border: none;
+        padding: 5px 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        color: #2E7D32;
+        outline: none;
+    }
+    .language-selector select:hover {
+        color: #1976D2;
+    }
+    
+    /* HERO SECTION - ARREGLADO */
     .hero {
       background: linear-gradient(135deg, rgba(46,125,50,0.92) 0%, rgba(25,118,210,0.88) 100%), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
       color: #fff;
-      min-height: 600px;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 24px;
+      padding: 100px 24px 100px 24px;
       position: relative;
       border-radius: 0 0 40px 40px;
       margin-bottom: 0;
       box-shadow: 0 8px 32px rgba(67,233,123,0.08);
       overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
     }
     .hero-title {
       font-size: 3.2rem;
       font-weight: 800;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
       letter-spacing: 0.5px;
       display: flex;
       align-items: center;
@@ -52,34 +82,38 @@
       gap: 18px;
       color: #fff;
       text-shadow: 0 2px 16px rgba(46,125,50,0.18);
+      max-width: 1000px;
+      line-height: 1.2;
     }
     .hero-subtitle {
       font-size: 1.7rem;
       font-weight: 500;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
       color: #e0f2f1;
       text-shadow: 0 1px 8px rgba(25,118,210,0.13);
+      max-width: 800px;
     }
     .hero-desc {
       font-size: 1.25rem;
       font-weight: 400;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       color: #e3fcec;
       text-shadow: 0 1px 8px rgba(25,118,210,0.10);
+      max-width: 700px;
+      line-height: 1.5;
     }
     .hero-cta {
       background: linear-gradient(135deg, #4CAF50 0%, #1976D2 100%);
       color: #fff;
       border: none;
       border-radius: 18px;
-      padding: 20px 60px;
+      padding: 22px 60px;
       font-size: 1.35rem;
       font-weight: 700;
       cursor: pointer;
       box-shadow: 0 4px 16px rgba(33,150,243,0.10);
       transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-      margin-top: 10px;
-      margin-bottom: 10px;
+      margin: 20px 0 40px 0;
       letter-spacing: 0.5px;
     }
     .hero-cta:hover {
@@ -87,6 +121,7 @@
       transform: translateY(-2px) scale(1.04);
       box-shadow: 0 8px 32px rgba(33,150,243,0.18);
     }
+    
     /* Estadísticas HERO */
     .hero-stats {
       display: flex;
@@ -95,6 +130,7 @@
       margin-top: 48px;
       flex-wrap: wrap;
       animation: fadeInUp 1.2s cubic-bezier(.23,1.01,.32,1) both;
+      max-width: 900px;
     }
     .hero-stat {
       background: rgba(255,255,255,0.13);
@@ -115,6 +151,7 @@
       font-size: 2.2rem;
       margin-right: 8px;
     }
+    
     /* SEPARACIÓN ENTRE SECCIONES */
     .section {
       width: 100%;
@@ -131,6 +168,7 @@
       background: #f7fafc;
       box-shadow: 0 4px 16px rgba(0,0,0,0.04);
     }
+    
     /* QUÉ ANALIZAMOS */
     .analizamos-cards {
       display: flex;
@@ -179,6 +217,7 @@
       line-height: 1.6;
       text-align: left;
     }
+    
     /* SECCIÓN TECNOLOGÍA (GRID) */
     .funciona-steps {
       display: grid;
@@ -232,6 +271,7 @@
       color: #333;
       font-weight: 500;
     }
+    
     /* Estadísticas tecnología */
     .funciona-datos {
       margin-top: 36px;
@@ -260,6 +300,7 @@
       font-size: 2rem;
       margin-right: 8px;
     }
+    
     /* Cultivos soportados */
     .cultivos-grid {
       display: grid;
@@ -285,12 +326,14 @@
       transform: translateY(-2px) scale(1.04);
       border-color: #b2dfdb;
     }
+    
     /* Formulario y resultados */
     .main-container {
       max-width: 900px;
       width: 100%;
-      background: #fff;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+      background: linear-gradient(145deg, #ffffff 0%, #f8f6ff 100%);
+      box-shadow: 0 12px 40px rgba(94, 53, 177, 0.15);
+      border: 1px solid rgba(94, 53, 177, 0.08);
       border-radius: 20px;
       padding: 60px 40px 60px 40px;
       margin: 0 auto 48px auto;
@@ -310,6 +353,13 @@
       margin-bottom: 20px;
       width: 100%;
     }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #2E7D32;
+      font-size: 16px;
+    }
     input, select {
       width: 100%;
       padding: 16px 20px;
@@ -317,6 +367,13 @@
       border: 2px solid #E8F5E8;
       font-size: 16px;
       display: block;
+      box-sizing: border-box;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 0 0 3px rgba(76,175,80,0.1);
     }
     .form-actions {
       grid-column: 1 / -1;
@@ -324,6 +381,7 @@
       gap: 20px;
       margin-top: 8px;
       justify-content: center;
+      width: 100%;
     }
     button[type="submit"] {
       background: linear-gradient(135deg, #4CAF50 0%, #1976D2 100%);
@@ -364,11 +422,13 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 25px rgba(244, 67, 54, 0.18);
     }
+    
     /* Animaciones */
     @keyframes fadeInUp {
       0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
     }
+    
     /* Responsive */
     @media (max-width: 1200px) {
       .section, .main-container { max-width: 98vw; }
@@ -376,75 +436,69 @@
     }
     @media (max-width: 1024px) {
       .section, .main-container { padding: 24px 8px; }
-      .hero { padding: 64px 8px 48px 8px; }
+      .hero { padding: 80px 8px 80px 8px; min-height: 80vh; }
       .funciona-steps { grid-template-columns: repeat(2, 1fr); }
+      .hero-title { font-size: 2.5rem; }
+      .hero-subtitle { font-size: 1.4rem; }
     }
     @media (max-width: 768px) {
       .analizamos-cards, .funciona-datos { flex-direction: column; gap: 18px; }
       .section, .main-container { padding: 16px 2vw; }
-      .hero { padding: 40px 2vw 32px 2vw; }
+      .hero { padding: 60px 2vw 60px 2vw; min-height: 70vh; }
       .form-section-title { font-size: 1.3rem; }
       .funciona-steps { grid-template-columns: 1fr 1fr; }
+      .hero-title { font-size: 2rem; }
+      .hero-subtitle { font-size: 1.2rem; }
+      .hero-desc { font-size: 1.1rem; }
+      .language-selector {
+        top: 15px;
+        right: 15px;
+        padding: 8px 12px;
+      }
     }
     @media (max-width: 600px) {
       .funciona-steps { grid-template-columns: 1fr; }
+      .hero-stats { gap: 20px; }
+      .hero-stat { min-width: 150px; padding: 18px 24px; }
     }
     @media (max-width: 480px) {
       .section, .main-container { padding: 8px 0; }
-      .hero-title { font-size: 1.3rem; }
+      .hero-title { font-size: 1.6rem; }
       .hero-subtitle { font-size: 1.1rem; }
       .hero-desc { font-size: 0.98rem; }
       .form-section-title { font-size: 1.1rem; }
+      .hero { padding: 40px 1rem 40px 1rem; }
     }
+    
     /* Navegación suave */
     html {
       scroll-behavior: smooth;
     }
-    .language-selector {
-        position: fixed;
-        top: 10px;
-        right: 20px;
-        z-index: 9999;
-        background: white;
-        padding: 5px;
-        border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    }
-    .language-selector select {
-        background: white;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 8px 12px;
-        cursor: pointer;
-        font-size: 14px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .language-selector select:hover {
-        border-color: #4CAF50;
-    }
   </style>
 </head>
 <body>
+  <!-- SELECTOR DE IDIOMAS ARREGLADO -->
   <div class="language-selector">
     <select id="languageSelect" onchange="changeLanguage()">
         <option value="es">🇪🇸 Español</option>
         <option value="en">🇺🇸 English</option>
         <option value="pt">🇵🇹 Português</option>
         <option value="fr">🇫🇷 Français</option>
-        <option value="it">🇮 Italiano</option>
+        <option value="it">🇮🇹 Italiano</option>
     </select>
   </div>
-  <!-- HERO SECTION -->
+  
+  <!-- HERO SECTION ARREGLADO -->
   <section class="hero" id="hero">
     <div class="hero-title" data-translate="heroTitle"><span class="icon">🌱</span>AgroStable - Análisis Satelital Agrícola Inteligente</div>
     <div class="hero-subtitle" data-translate="heroSubtitle">Previene pérdidas en tu cultivo con datos satelitales en tiempo real</div>
     <div class="hero-desc" data-translate="heroDescription">Analiza la salud de tu plantación, condiciones climáticas y estabilidad del suelo usando tecnología espacial de última generación</div>
     <button class="hero-cta" data-translate="heroButton" onclick="document.getElementById('form-section').scrollIntoView({behavior:'smooth'})">Analizar mi finca gratis</button>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-icon">📡</span>15+ cultivos analizados</div>
-      <div class="hero-stat"><span class="hero-stat-icon">🛰️</span>10m resolución espacial</div>
-      <div class="hero-stat"><span class="hero-stat-icon">⏱️</span>30 segundos análisis</div>
-      <div class="hero-stat"><span class="hero-stat-icon">📊</span><5% margen error</div>
+      <div class="hero-stat"><span class="hero-stat-icon">📡</span><span data-translate="stat1">15+ cultivos analizados</span></div>
+      <div class="hero-stat"><span class="hero-stat-icon">🛰️</span><span data-translate="stat2">10m resolución espacial</span></div>
+      <div class="hero-stat"><span class="hero-stat-icon">⏱️</span><span data-translate="stat3">30 segundos análisis</span></div>
+      <div class="hero-stat"><span class="hero-stat-icon">📊</span><span data-translate="stat4"><5% margen error</span></div>
     </div>
   </section>
 
@@ -507,28 +561,28 @@
   <section class="section" id="cultivos">
     <h2 style="text-align:center; color:#2E7D32; font-size:2rem; font-weight:700; margin-bottom:18px;" data-translate="cropsTitle">Cultivos analizados</h2>
     <div class="cultivos-grid">
-      <div class="cultivo-item">Café</div>
-      <div class="cultivo-item">Tomate</div>
-      <div class="cultivo-item">Maíz</div>
-      <div class="cultivo-item">Arroz</div>
-      <div class="cultivo-item">Papa</div>
-      <div class="cultivo-item">Frijol</div>
-      <div class="cultivo-item">Cebolla</div>
-      <div class="cultivo-item">Lechuga</div>
-      <div class="cultivo-item">Plátano</div>
-      <div class="cultivo-item">Caña de azúcar</div>
-      <div class="cultivo-item">Cacao</div>
-      <div class="cultivo-item">Yuca</div>
-      <div class="cultivo-item">Flores</div>
-      <div class="cultivo-item">Trigo</div>
-      <div class="cultivo-item">Aguacate</div>
+      <div class="cultivo-item" data-translate="coffee">Café</div>
+      <div class="cultivo-item" data-translate="tomato">Tomate</div>
+      <div class="cultivo-item" data-translate="corn">Maíz</div>
+      <div class="cultivo-item" data-translate="rice">Arroz</div>
+      <div class="cultivo-item" data-translate="potato">Papa</div>
+      <div class="cultivo-item" data-translate="beans">Frijol</div>
+      <div class="cultivo-item" data-translate="onion">Cebolla</div>
+      <div class="cultivo-item" data-translate="lettuce">Lechuga</div>
+      <div class="cultivo-item" data-translate="banana">Plátano</div>
+      <div class="cultivo-item" data-translate="sugarcane">Caña de azúcar</div>
+      <div class="cultivo-item" data-translate="cacao">Cacao</div>
+      <div class="cultivo-item" data-translate="cassava">Yuca</div>
+      <div class="cultivo-item" data-translate="flowers">Flores</div>
+      <div class="cultivo-item" data-translate="wheat">Trigo</div>
+      <div class="cultivo-item" data-translate="avocado">Aguacate</div>
     </div>
   </section>
 
   <!-- FORMULARIO Y RESULTADOS -->
-  <section class="section bg-alt" id="form-section" style="padding-left:0; padding-right:0; margin:60px auto 80px auto;">
-    <div class="form-section-title">Analiza tu finca ahora</div>
-    <div class="main-container" style="box-shadow: 0 8px 32px rgba(94, 53, 177, 0.15); border: 1px solid rgba(94, 53, 177, 0.1); background: linear-gradient(145deg, #ffffff 0%, #f8f6ff 100%); padding: 40px; margin:0; width:100%; max-width:none;">
+  <section class="section bg-alt" id="form-section" style="padding-left:24px; padding-right:24px; margin:60px auto 80px auto;">
+    <div class="form-section-title" data-translate="formTitle">Analiza tu finca ahora</div>
+    <div class="main-container">
       <div class="header">
         <div class="logo"><span class="icon">🌱</span>AgroStable</div>
         <div class="subtitle">Análisis Satelital Agrícola Inteligente</div>
@@ -550,26 +604,26 @@
           <label for="crop-type" data-translate="cropType">Tipo de cultivo</label>
           <select id="crop-type" name="crop-type" required>
             <option value="" data-translate="selectCrop">Seleccione...</option>
-            <option value="Tomate">Tomate</option>
-            <option value="Maíz">Maíz</option>
-            <option value="Café">Café</option>
-            <option value="Arroz">Arroz</option>
-            <option value="Papa">Papa</option>
-            <option value="Frijol">Frijol</option>
-            <option value="Cebolla">Cebolla</option>
-            <option value="Lechuga">Lechuga</option>
-            <option value="Plátano">Plátano</option>
-            <option value="Caña de azúcar">Caña de azúcar</option>
-            <option value="Cacao">Cacao</option>
-            <option value="Yuca">Yuca</option>
-            <option value="Flores">Flores</option>
-            <option value="Trigo">Trigo</option>
-            <option value="Aguacate">Aguacate</option>
+            <option value="Tomate" data-translate="tomato">Tomate</option>
+            <option value="Maíz" data-translate="corn">Maíz</option>
+            <option value="Café" data-translate="coffee">Café</option>
+            <option value="Arroz" data-translate="rice">Arroz</option>
+            <option value="Papa" data-translate="potato">Papa</option>
+            <option value="Frijol" data-translate="beans">Frijol</option>
+            <option value="Cebolla" data-translate="onion">Cebolla</option>
+            <option value="Lechuga" data-translate="lettuce">Lechuga</option>
+            <option value="Plátano" data-translate="banana">Plátano</option>
+            <option value="Caña de azúcar" data-translate="sugarcane">Caña de azúcar</option>
+            <option value="Cacao" data-translate="cacao">Cacao</option>
+            <option value="Yuca" data-translate="cassava">Yuca</option>
+            <option value="Flores" data-translate="flowers">Flores</option>
+            <option value="Trigo" data-translate="wheat">Trigo</option>
+            <option value="Aguacate" data-translate="avocado">Aguacate</option>
           </select>
         </div>
         <div class="form-actions" style="display:flex; gap:20px; margin-top:8px; justify-content:center;">
           <button type="submit" data-translate="analyzeFarm">Analizar Finca</button>
-          <button type="button" id="clear-btn">Limpiar</button>
+          <button type="button" id="clear-btn" data-translate="clearBtn">Limpiar</button>
         </div>
       </form>
       <section id="resultados">
@@ -599,6 +653,7 @@
     };
     let rangosCultivo = null;
     let rangosCultivoPromesa = null;
+    
     // Consultar rangos dinámicos al seleccionar cultivo
     const cropTypeSelect = document.getElementById('crop-type');
     cropTypeSelect.addEventListener('change', async function() {
@@ -606,7 +661,7 @@
       rangosCultivo = null;
       if (!cultivo) return;
       try {
-        const resp = await fetch('http://localhost:3001/cultivo-rangos', {
+        const resp = await fetch('/cultivo-rangos', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ cultivo })
@@ -657,38 +712,35 @@
 
     // ========== NUEVA FUNCIÓN DE CÁLCULO DE PUNTUACIÓN ==========
     function calcularPuntuacionFinal(penalizaciones) {
-        // Sumar todas las penalizaciones
         let totalPenalizaciones = 0;
         let detalleCalculos = [];
-        // NDVI
+        
         if (penalizaciones.ndvi > 0) {
             totalPenalizaciones += penalizaciones.ndvi;
             detalleCalculos.push(`NDVI: -${penalizaciones.ndvi}`);
         }
-        // Subsidencia  
         if (penalizaciones.subsidencia > 0) {
             totalPenalizaciones += penalizaciones.subsidencia;
             detalleCalculos.push(`Subsidencia: -${penalizaciones.subsidencia}`);
         }
-        // Temperatura
         if (penalizaciones.temperatura > 0) {
             totalPenalizaciones += penalizaciones.temperatura;
             detalleCalculos.push(`Temperatura: -${penalizaciones.temperatura}`);
         }
-        // Humedad
         if (penalizaciones.humedad > 0) {
             totalPenalizaciones += penalizaciones.humedad;
             detalleCalculos.push(`Humedad: -${penalizaciones.humedad}`);
         }
-        // Cálculo final
+        
         const puntuacionFinal = Math.max(5, 100 - totalPenalizaciones);
-        // Debug obligatorio
+        
         console.log('=== CÁLCULO PUNTUACIÓN ===');
         console.log('Penalizaciones individuales:', penalizaciones);
         console.log('Total penalizaciones:', totalPenalizaciones);
         console.log('Detalle:', detalleCalculos.join(', '));
         console.log('Puntuación final: 100 -', totalPenalizaciones, '=', puntuacionFinal);
         console.log('========================');
+        
         return {
             puntuacion: puntuacionFinal,
             totalPenalizaciones: totalPenalizaciones,
@@ -698,15 +750,15 @@
 
     // FUNCIÓN PARA INTERPRETAR DATOS DE AGROSTABLE CON RANGOS DINÁMICOS
     function interpretarDatosAgricolas(ndvi, subsidencia, clima, cultivo, rangos) {
-      // Usar rangos dinámicos si existen, si no, por defecto
       const r = rangos || RANGOS_POR_DEFECTO;
-      // ========== INTERPRETACIÓN NDVI ==========
+      
       function interpretarNDVI(valor, cultivo) {
         let estado = "Sin datos", porcentaje = null, descripcion = "", calidad = "";
         if (valor === null || valor === undefined || valor < 0) {
           descripcion = "No hay suficientes imágenes satelitales sin nubes en los últimos 30 días.";
           return { estado, porcentaje, descripcion, calidad };
         }
+        
         let ndviRangos = r.ndvi || [
           { estado: "CRÍTICO", min: r.ndvi_critico_min ?? 0.00, max: r.ndvi_critico_max ?? 0.19 },
           { estado: "MALO", min: r.ndvi_malo_min ?? 0.20, max: r.ndvi_malo_max ?? 0.39 },
@@ -714,7 +766,7 @@
           { estado: "BUENO", min: r.ndvi_bueno_min ?? 0.60, max: r.ndvi_bueno_max ?? 0.79 },
           { estado: "EXCELENTE", min: r.ndvi_excelente_min ?? 0.80, max: r.ndvi_excelente_max ?? 1.00 }
         ];
-        // Si los rangos vienen de Supabase, construir arreglo
+        
         if (!r.ndvi && r.ndvi_critico_min !== undefined) {
           ndviRangos = [
             { estado: "CRÍTICO", min: r.ndvi_critico_min, max: r.ndvi_critico_max },
@@ -724,22 +776,26 @@
             { estado: "EXCELENTE", min: r.ndvi_excelente_min, max: r.ndvi_excelente_max }
           ];
         }
+        
         for (const rango of ndviRangos) {
           if (valor >= rango.min && valor <= rango.max) {
             estado = rango.estado;
             break;
           }
         }
+        
         porcentaje = Math.round(valor * 100);
+        
         if (estado === "EXCELENTE") calidad = "alta";
         else if (estado === "BUENO") calidad = "media-alta";
         else if (estado === "REGULAR") calidad = "media";
         else if (estado === "MALO") calidad = "baja";
         else if (estado === "CRÍTICO") calidad = "crítica";
+        
         descripcion = `Tu plantación de ${cultivo} está en estado ${estado.toLowerCase()}.`;
         return { estado, porcentaje, descripcion, calidad };
       }
-      // ========== INTERPRETACIÓN SUBSIDENCIA ==========
+      
       function interpretarSubsidencia(valor, cultivo) {
         if (valor === null || valor === undefined || isNaN(valor)) {
           return { estado: "Sin datos", descripcion: "No hay datos de subsidencia disponibles.", riesgo: "N/A", penalizacion: null };
@@ -763,31 +819,19 @@
         let riesgo = clasif.categoria === "CRÍTICO" ? "Alto" : clasif.categoria === "INESTABLE" ? "Moderado" : clasif.categoria === "LIGERAMENTE INESTABLE" ? "Bajo" : "Muy bajo";
         return { estado: clasif.categoria, descripcion, riesgo, penalizacion: clasif.penalizacion };
       }
-      // ========== RECOMENDACIONES INTELIGENTES ==========
+      
       function generarRecomendaciones(ndviResult, subsidenciaResult, climaResult, cultivo) {
         let recomendaciones = [];
+        
         if (ndviResult.estado === "Sin datos") {
           recomendaciones.push("No hay suficientes imágenes satelitales sin nubes en los últimos 30 días. Repetir análisis en unos días cuando haya imágenes disponibles.");
         } else if (ndviResult.calidad === "crítica") {
           recomendaciones.push(`🚨 URGENTE: Implementar riego de emergencia y revisar sistema de irrigación PORQUE el NDVI crítico (${ndviResult.porcentaje}%) indica estrés hídrico severo.`);
           recomendaciones.push(`💧 Aplicar fertilización foliar rica en nitrógeno inmediatamente PORQUE el NDVI crítico (${ndviResult.porcentaje}%) sugiere deficiencia nutricional.`);
           recomendaciones.push(`🧪 Realizar análisis de suelo para detectar deficiencias nutricionales PORQUE el NDVI crítico (${ndviResult.porcentaje}%) puede deberse a problemas de suelo.`);
-          recomendaciones.push(`☀️ Verificar sombreo si hay temperaturas extremas PORQUE el NDVI crítico (${ndviResult.porcentaje}%) puede estar relacionado con estrés térmico.`);
-          recomendaciones.push("Si no hay mejora en 2-3 semanas, considerar replantación parcial de zonas más afectadas.");
         } else if (ndviResult.calidad === "baja") {
           recomendaciones.push(`💊 Aplicar fertilización foliar PORQUE el NDVI bajo (${ndviResult.porcentaje}%) indica posible deficiencia nutricional.`);
           recomendaciones.push(`🌿 Manejo integrado de plagas y enfermedades PORQUE el NDVI bajo (${ndviResult.porcentaje}%) puede estar asociado a daño por plagas o enfermedades.`);
-          if (climaResult && climaResult.temp > 0) {
-            if (climaResult.temp > 30) {
-              recomendaciones.push(`💧 Aumentar frecuencia de riego PORQUE la temperatura alta (${climaResult.temp}°C) genera estrés térmico.`);
-            } else if (climaResult.temp < 15) {
-              recomendaciones.push(`☀️ Mejorar exposición solar PORQUE la temperatura baja (${climaResult.temp}°C) puede limitar el crecimiento.`);
-            } else {
-              recomendaciones.push(`💧 Optimizar frecuencia de riego PORQUE el NDVI bajo (${ndviResult.porcentaje}%) puede estar relacionado con el riego.`);
-            }
-          } else {
-            recomendaciones.push(`💧 Optimizar frecuencia de riego PORQUE el NDVI bajo (${ndviResult.porcentaje}%) puede estar relacionado con el riego.`);
-          }
         } else if (ndviResult.calidad === "media") {
           recomendaciones.push(`🌱 Fertilización de mantenimiento PORQUE el NDVI regular (${ndviResult.porcentaje}%) indica vegetación moderada.`);
           recomendaciones.push(`👀 Monitoreo semanal del cultivo para detectar cambios en NDVI y clima.`);
@@ -795,20 +839,21 @@
           recomendaciones.push(`✅ Mantener prácticas actuales PORQUE el NDVI es bueno/excelente (${ndviResult.porcentaje}%).`);
           recomendaciones.push(`📊 Monitoreo mensual preventivo para asegurar estabilidad.`);
         }
+        
         if (subsidenciaResult.riesgo === "Alto") {
           recomendaciones.push(`⚠️ Revisar sistema de riego por posibles rupturas PORQUE la subsidencia es alta (terreno inestable).`);
         }
+        
         return recomendaciones.slice(0, 5);
       }
-      // ========== EJECUTAR ==========
+      
       const ndviResult = interpretarNDVI(ndvi, cultivo);
       const subsidenciaResult = interpretarSubsidencia(subsidencia, cultivo);
       const recomendaciones = generarRecomendaciones(ndviResult, subsidenciaResult, clima, cultivo);
 
-      // ================= NUEVO CÁLCULO DE PENALIZACIONES Y PUNTUACIÓN =================
-      // 1. Penalización NDVI
+      // Cálculo de penalizaciones
       let penalNDVI = null;
-      if (ndviResult && ndviResult.estado && ndviResult.estado.toUpperCase() !== 'SIN DATOS' && ndviResult.estado.toUpperCase() !== 'NULL') {
+      if (ndviResult && ndviResult.estado && ndviResult.estado.toUpperCase() !== 'SIN DATOS') {
         switch (ndviResult.estado.toUpperCase()) {
           case 'CRÍTICO': penalNDVI = 30; break;
           case 'MALO': penalNDVI = 18; break;
@@ -817,12 +862,12 @@
           case 'EXCELENTE': penalNDVI = 0; break;
         }
       }
-      // 2. Penalización Subsidencia
+      
       let penalSubs = null;
-      if (subsidenciaResult && subsidenciaResult.estado && subsidenciaResult.estado.toUpperCase() !== 'SIN DATOS' && subsidenciaResult.estado.toUpperCase() !== 'NULL') {
+      if (subsidenciaResult && subsidenciaResult.estado && subsidenciaResult.estado.toUpperCase() !== 'SIN DATOS') {
         penalSubs = subsidenciaResult.penalizacion;
       }
-      // 3. Penalización Temperatura
+      
       let penalTemp = 0;
       if (clima && typeof clima.temp === 'number') {
         let tempMin = (typeof r.temp_minima === 'number') ? r.temp_minima : (r.temp ? r.temp.min : 18);
@@ -831,11 +876,9 @@
           penalTemp = Math.min(20, 4 * Math.ceil((tempMin - clima.temp) / 2));
         } else if (clima.temp > tempMax) {
           penalTemp = Math.min(20, 4 * Math.ceil((clima.temp - tempMax) / 2));
-        } else {
-          penalTemp = 0;
         }
       }
-      // 4. Penalización Humedad
+      
       let penalHum = 0;
       if (clima && typeof clima.humidity === 'number') {
         let humMin = (typeof r.humedad_minima === 'number') ? r.humedad_minima : (r.humedad ? r.humedad.min : 60);
@@ -844,42 +887,41 @@
           penalHum = Math.min(15, 3 * Math.ceil((humMin - clima.humidity) / 5));
         } else if (clima.humidity > humMax) {
           penalHum = Math.min(15, 3 * Math.ceil((clima.humidity - humMax) / 5));
-        } else {
-          penalHum = 0;
         }
       }
-      // Usar la nueva función de cálculo de puntuación
+      
       const penalizacionesObj = {
         ndvi: penalNDVI || 0,
         subsidencia: penalSubs || 0,
         temperatura: penalTemp || 0,
         humedad: penalHum || 0
       };
+      
       const resultadoPunt = calcularPuntuacionFinal(penalizacionesObj);
       let puntuacion = resultadoPunt.puntuacion;
-      const totalPenal = resultadoPunt.totalPenalizaciones;
-      const detallePenal = resultadoPunt.detalle;
-      // Nivel
+      
       let nivel = "";
       if (puntuacion >= 80) nivel = "EXCELENTE";
       else if (puntuacion >= 60) nivel = "BUENO";
       else if (puntuacion >= 40) nivel = "REGULAR";
       else if (puntuacion >= 20) nivel = "RIESGO MEDIO";
       else nivel = "REQUIERE ATENCIÓN URGENTE";
-      // Solo sumar penalizaciones de factores con datos
+      
       const penalizaciones = [
         { categoria: 'NDVI', puntos: penalNDVI },
         { categoria: 'Subsidencia', puntos: penalSubs },
         { categoria: 'Temperatura', puntos: penalTemp },
         { categoria: 'Humedad', puntos: penalHum }
       ];
+      
       const factoresConDatos = penalizaciones.filter(p => p.puntos !== null);
       const esParcial = factoresConDatos.length < 4;
+      
       return {
         ndvi: ndviResult,
         subsidencia: subsidenciaResult,
         recomendaciones: recomendaciones,
-        puntuacion: { puntuacion, nivel, esParcial, detallePenal },
+        puntuacion: { puntuacion, nivel, esParcial },
         penalizaciones: penalizaciones,
         clima,
         cultivo,
@@ -887,84 +929,14 @@
       };
     }
 
-    // ================= SISTEMA DE EXPLICACIÓN AUTOMÁTICA DE PUNTUACIÓN =================
-    function explicarPuntuacionGeneral({ ndvi, subsidencia, clima, cultivo, rangos, puntuacion, penalizaciones }) {
-      let r = rangos || RANGOS_POR_DEFECTO;
-      let tempMin = (typeof r.temp_minima === 'number') ? r.temp_minima : (r.temp ? r.temp.min : 18);
-      let tempMax = (typeof r.temp_maxima === 'number') ? r.temp_maxima : (r.temp ? r.temp.max : 26);
-      let humMin = (typeof r.humedad_minima === 'number') ? r.humedad_minima : (r.humedad ? r.humedad.min : 60);
-      let humMax = (typeof r.humedad_maxima === 'number') ? r.humedad_maxima : (r.humedad ? r.humedad.max : 80);
-      // NDVI
-      let ndviPenal = penalizaciones.find(p => p.categoria === 'NDVI')?.puntos ?? 0;
-      let ndviEstado = ndvi?.estado || 'Sin datos';
-      let ndviExp = ndvi && ndvi.estado ?
-        (ndvi.estado.toUpperCase() === 'SIN DATOS' ? `Datos no disponibles por condiciones climáticas.` :
-        ndvi.estado.toUpperCase() === 'CRÍTICO' ? `Vegetación muy escasa o suelo desnudo para ${cultivo}.` :
-        ndvi.estado.toUpperCase() === 'MALO' ? `Vegetación escasa, riesgo de bajo rendimiento.` :
-        ndvi.estado.toUpperCase() === 'REGULAR' ? `Vegetación moderada, necesita mejoras.` :
-        ndvi.estado.toUpperCase() === 'BUENO' ? `Vegetación saludable, margen de mejora.` :
-        `Vegetación densa y saludable para ${cultivo}.`) : 'Sin datos.';
-      // Subsidencia
-      let subPenal = penalizaciones.find(p => p.categoria === 'Subsidencia')?.puntos ?? 0;
-      let subEstado = subsidencia?.estado || 'Sin datos';
-      let subExp = subsidencia && subsidencia.estado ?
-        (subsidencia.estado.toUpperCase() === 'CRÍTICO' ? `Terreno inestable amenaza la infraestructura.` :
-        subsidencia.estado.toUpperCase() === 'INESTABLE' ? `Riesgo moderado de hundimiento.` :
-        subsidencia.estado.toUpperCase() === 'LIGERAMENTE INESTABLE' ? `Ligera inestabilidad del terreno.` :
-        subsidencia.estado.toUpperCase() === 'ESTABLE' ? `Terreno firme y seguro.` :
-        'Sin datos.') : 'Sin datos.';
-      // Temperatura
-      let tempPenal = penalizaciones.find(p => p.categoria === 'Temperatura')?.puntos ?? 0;
-      let tempEstado = 'Sin datos';
-      let tempExp = 'Sin datos.';
-      if (clima && typeof clima.temp === 'number') {
-        if (clima.temp < tempMin) {
-          tempEstado = 'Baja';
-          tempExp = `${clima.temp}°C está por debajo del rango óptimo para ${cultivo} (${tempMin}-${tempMax}°C).`;
-        } else if (clima.temp > tempMax) {
-          tempEstado = 'Alta';
-          tempExp = `${clima.temp}°C está muy por encima del rango óptimo para ${cultivo} (${tempMin}-${tempMax}°C).`;
-        } else {
-          tempEstado = 'Ideal';
-          tempExp = `${clima.temp}°C en el rango óptimo para ${cultivo}.`;
-        }
-      }
-      // Humedad
-      let humPenal = penalizaciones.find(p => p.categoria === 'Humedad')?.puntos ?? 0;
-      let humEstado = 'Sin datos';
-      let humExp = 'Sin datos.';
-      if (clima && typeof clima.humidity === 'number') {
-        if (clima.humidity < humMin) {
-          humEstado = 'Baja';
-          humExp = `${clima.humidity}% está por debajo del rango óptimo para ${cultivo} (${humMin}-${humMax}%).`;
-        } else if (clima.humidity > humMax) {
-          humEstado = 'Alta';
-          humExp = `${clima.humidity}% está por encima del rango óptimo para ${cultivo} (${humMin}-${humMax}%).`;
-        } else {
-          humEstado = 'Ideal';
-          humExp = `${clima.humidity}% en el rango óptimo para ${cultivo}.`;
-        }
-      }
-      // Título y lista
-      return `
-        <b>¿Por qué esta puntuación?</b>
-        <ul style='margin:0.3em 0 0.3em 1.2em;'>
-          <li><b>NDVI ${ndviEstado}</b> (-${ndviPenal} puntos): ${ndviExp}</li>
-          <li><b>Subsidencia ${subEstado}</b> (-${subPenal} puntos): ${subExp}</li>
-          <li><b>Temperatura ${tempEstado}</b> (-${tempPenal} puntos): ${tempExp}</li>
-          <li><b>Humedad ${humEstado}</b> (-${humPenal} puntos): ${humExp}</li>
-        </ul>
-      `;
-    }
-
-    // ========== LEAFLET MAPA DE RESULTADO ==========
+    // LEAFLET MAPA DE RESULTADO
     let resultMap = null;
     let resultMarker = null;
     function mostrarMapaResultado(lat, lng) {
       const mapDiv = document.getElementById('result-map');
       mapDiv.style.display = 'block';
       mapDiv.innerHTML = '';
-      // Título sobre el mapa
+      
       if (!document.getElementById('result-map-title')) {
         const title = document.createElement('div');
         title.id = 'result-map-title';
@@ -974,84 +946,76 @@
         title.style.marginBottom = '8px';
         mapDiv.parentNode.insertBefore(title, mapDiv);
       }
-      // Inicializar mapa
+      
       resultMap = L.map('result-map').setView([lat, lng], 15);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(resultMap);
       resultMarker = L.marker([lat, lng]).addTo(resultMap);
     }
 
-    // ========== FIX: USAR SIEMPRE LOS CAMPOS latitud/longitud PARA ANÁLISIS ==========
+    // SUBMIT DEL FORMULARIO
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       try {
-        // Validación manual
         const nombre = document.getElementById('farm-name').value.trim();
         const lat = document.getElementById('latitud').value.trim();
         const lon = document.getElementById('longitud').value.trim();
         const cultivo = document.getElementById('crop-type').value;
+        
         if (!nombre || !lat || !lon || !cultivo) {
           alert('Por favor, complete todos los campos.');
           return;
         }
+        
         resultadosLista.innerHTML = '<li>Consultando clima y subsidencia...</li>';
         resultados.style.display = 'block';
-        // Consultar clima a través del backend
+        
+        // Consultar clima
         let temp = null;
         let humidity = null;
         let climaInfo = '';
-        let climaApiError = false;
         try {
-          const resp = await fetch('http://localhost:3001/clima', {
+          const resp = await fetch('/clima', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ lat: parseFloat(lat), lon: parseFloat(lon) })
           });
-          if (!resp.ok) throw new Error('Error al consultar el clima');
-          const result = await resp.json();
-          if (!result.success || !result.data) throw new Error('Respuesta inválida de /clima');
-          const data = result.data;
-          temp = (data.main && typeof data.main.temp === 'number') ? data.main.temp : null;
-          humidity = (data.main && typeof data.main.humidity === 'number') ? data.main.humidity : null;
-          const weather = data.weather?.[0]?.description;
-          const wind = data.wind?.speed;
-          climaInfo = `🌡️ <b>Condiciones climáticas:</b> ${weather ? weather.charAt(0).toUpperCase() + weather.slice(1) : 'N/A'}, ${temp !== null ? temp + '°C' : ''} (Humedad: ${humidity !== null ? humidity + '%' : 'N/A'}, Viento: ${wind ?? 'N/A'} m/s)`;
+          if (resp.ok) {
+            const result = await resp.json();
+            if (result.success && result.data) {
+              temp = result.data.main?.temp;
+              humidity = result.data.main?.humidity;
+              const weather = result.data.weather?.[0]?.description;
+              const wind = result.data.wind?.speed;
+              climaInfo = `🌡️ <b>Condiciones climáticas:</b> ${weather ? weather.charAt(0).toUpperCase() + weather.slice(1) : 'N/A'}, ${temp !== null ? temp + '°C' : ''} (Humedad: ${humidity !== null ? humidity + '%' : 'N/A'}, Viento: ${wind ?? 'N/A'} m/s)`;
+            }
+          }
         } catch (err) {
           console.error('Error al consultar clima:', err);
           climaInfo = 'Error al consultar clima.';
-          temp = null;
-          humidity = null;
-          climaApiError = true;
         }
-        // Consultar NDVI real del backend
+        
+        // Consultar NDVI
         let ndviValue = null;
-        let ndviFecha = null;
-        let ndviApiError = false;
         try {
-          const ndviResp = await fetch('http://localhost:3001/ndvi', {
+          const ndviResp = await fetch('/ndvi', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ lat: parseFloat(lat), lon: parseFloat(lon) })
           });
-          if (!ndviResp.ok) throw new Error('Error al consultar NDVI');
-          const ndviData = await ndviResp.json();
-          if (ndviData.success && ndviData.data && ndviData.data.ndvi !== null) {
-            ndviValue = ndviData.data.ndvi;
-            ndviFecha = ndviData.data.fecha;
-          } else if (ndviData.success && ndviData.data && ndviData.data.ndvi === null) {
-            ndviValue = null;
-          } else {
-            ndviApiError = true;
+          if (ndviResp.ok) {
+            const ndviData = await ndviResp.json();
+            if (ndviData.success && ndviData.data && ndviData.data.ndvi !== null) {
+              ndviValue = ndviData.data.ndvi;
+            }
           }
         } catch (err) {
           console.error('Error al consultar NDVI:', err);
-          ndviApiError = true;
-          ndviValue = null;
         }
-        // Consultar subsidencia real del backend
+        
+        // Consultar subsidencia
         let subsidenciaValor = null;
-        let subsidenciaApiError = false;
         try {
-          const subsResp = await fetch('http://localhost:3001/subsidence', {
+          const subsResp = await fetch('/subsidence', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ lat: parseFloat(lat), lon: parseFloat(lon) })
@@ -1060,25 +1024,17 @@
             const subsData = await subsResp.json();
             if (subsData.success && subsData.data.hasData) {
               subsidenciaValor = subsData.data.value;
-            } else if (subsData.success && !subsData.data.hasData) {
-              subsidenciaValor = null;
-            } else {
-              subsidenciaApiError = true;
             }
-          } else {
-            subsidenciaApiError = true;
           }
         } catch (err) {
           console.error('Error al consultar subsidencia:', err);
-          subsidenciaApiError = true;
-          subsidenciaValor = null;
         }
-        // Obtener rangos dinámicos del cultivo seleccionado
+        
+        // Obtener rangos dinámicos
         let rangos = rangosCultivo;
         if (!rangos) {
-          // Si no se consultó antes, intentar consultar ahora
           try {
-            const resp = await fetch('http://localhost:3001/cultivo-rangos', {
+            const resp = await fetch('/cultivo-rangos', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ cultivo })
@@ -1090,132 +1046,24 @@
               }
             }
           } catch (err) {
-            console.error('Error consultando rangos de cultivo en submit:', err);
+            console.error('Error consultando rangos de cultivo:', err);
           }
         }
-        // Usar la función de interpretación avanzada con rangos dinámicos
+        
         const resultado = interpretarDatosAgricolas(ndviValue, subsidenciaValor, { temp, humidity }, cultivo, rangos);
-        // Mostrar advertencia si alguna API falló
-        let advertencias = [];
-        if (ndviApiError) advertencias.push('⚠️ No se pudo obtener el NDVI por un error en el servidor.');
-        if (subsidenciaApiError) advertencias.push('⚠️ No se pudo obtener la subsidencia por un error en el servidor.');
-        if (climaApiError) advertencias.push('⚠️ No se pudo obtener el clima por un error en el servidor.');
-
-        // Análisis climático específico por cultivo
-        function analizarClimaPorCultivo(temp, humedad, condiciones, cultivo, rangos) {
-          // Usar rangos dinámicos si existen, si no, por defecto
-          let r = rangos || RANGOS_POR_DEFECTO;
-          // CORREGIDO: Usar exactamente temp_minima y temp_maxima si existen
-          let tempMin = (typeof r.temp_minima === 'number') ? r.temp_minima : (r.temp ? r.temp.min : 18);
-          let tempMax = (typeof r.temp_maxima === 'number') ? r.temp_maxima : (r.temp ? r.temp.max : 26);
-          let humedadMin = (typeof r.humedad_minima === 'number') ? r.humedad_minima : (r.humedad ? r.humedad.min : 60);
-          let humedadMax = (typeof r.humedad_maxima === 'number') ? r.humedad_maxima : (r.humedad ? r.humedad.max : 80);
-          let tempMsg = '', humedadMsg = '', condMsg = '';
-          if (typeof temp === 'number') {
-            if (temp < tempMin) tempMsg = `Temperatura: ${temp}°C - BAJA para ${cultivo} (ideal: ${tempMin}-${tempMax}°C). Puede causar estrés por frío.`;
-            else if (temp > tempMax) tempMsg = `Temperatura: ${temp}°C - ALTA para ${cultivo} (ideal: ${tempMin}-${tempMax}°C). Puede causar estrés térmico.`;
-            else tempMsg = `Temperatura: ${temp}°C - IDEAL para ${cultivo} (ideal: ${tempMin}-${tempMax}°C).`;
-          }
-          if (typeof humedad === 'number') {
-            if (humedad < humedadMin) humedadMsg = `Humedad: ${humedad}% - BAJA para ${cultivo} (ideal: ${humedadMin}-${humedadMax}%). Necesita más riego.`;
-            else if (humedad > humedadMax) humedadMsg = `Humedad: ${humedad}% - ALTA para ${cultivo} (ideal: ${humedadMin}-${humedadMax}%). Riesgo de hongos.`;
-            else humedadMsg = `Humedad: ${humedad}% - IDEAL para ${cultivo}.`;
-          }
-          // Eliminar la línea redundante de condiciones tipo 'Condiciones: XX°C'
-          if (condiciones) {
-            if (condiciones.toLowerCase().includes('nube')) condMsg = `Condiciones: ${condiciones.charAt(0).toUpperCase() + condiciones.slice(1)} - BUENAS para fotosíntesis.`;
-            else if (condiciones.toLowerCase().includes('lluvia')) condMsg = `Condiciones: ${condiciones.charAt(0).toUpperCase() + condiciones.slice(1)} - Precaución por exceso de agua.`;
-            // Eliminar cualquier condición que sea solo temperatura (ej: '31°C', '37.6°C', etc.)
-            else if (!/^\s*-?\d+(\.\d+)?\s*°c\s*\.?$/i.test(condiciones)) condMsg = `Condiciones: ${condiciones.charAt(0).toUpperCase() + condiciones.slice(1)}.`;
-          }
-          // Solo mostrar mensajes no redundantes
-          return `<div style='margin-top:0.7em;'><b>Análisis climático para ${cultivo}:</b><ul style='margin:0.3em 0 0.3em 1.2em;'>${[tempMsg, humedadMsg, condMsg].filter(Boolean).map(m=>`<li>${m}</li>`).join('')}</ul></div>`;
-        }
-
-        // Extraer condiciones para análisis climático
-        let weatherDesc = '';
-        try {
-          const weatherMatch = /Condiciones climáticas:\/b?([^,]*)/i.exec(climaInfo);
-          if (weatherMatch && weatherMatch[1]) weatherDesc = weatherMatch[1].trim();
-        } catch {}
-        if (!weatherDesc && climaInfo) {
-          const m = /Condiciones climáticas:[^,]*, ([^\(]*)/i.exec(climaInfo);
-          if (m && m[1]) weatherDesc = m[1].trim();
-        }
-        const climaAnalisis = analizarClimaPorCultivo(temp, humidity, weatherDesc, cultivo, rangos);
-
-        // Mostrar resultados en la UI con explicaciones educativas y análisis climático
+        
+        // Mostrar resultados
         resultadosLista.innerHTML = `
-          <li><b>🌱 NDVI:</b> ${ndviValue !== null && ndviValue !== undefined ? ndviValue.toFixed(2) + ' (' + resultado.ndvi.porcentaje + '%)' : 'N/A'} - <b>${resultado.ndvi.estado}</b><br>${resultado.ndvi.descripcion}
-            <div style="margin-top:0.7em;">
-              <b>¿Qué significa esto?</b><br>
-              El NDVI (Índice de Vegetación de Diferencia Normalizada) indica el vigor y salud de la vegetación. Valores altos significan plantas sanas y densas; valores bajos indican estrés, escasez o muerte vegetal.
-            </div>
-            <div style="margin-top:0.7em;">
-              <b>¿De dónde sale este dato?</b><br>
-              Analizamos tu finca con múltiples imágenes satelitales (Sentinel-2) de los últimos 30 días que miden el "verdor" de las plantas usando bandas del espectro visible e infrarrojo. Calculamos el NDVI promedio para obtener un resultado más preciso y estable, filtrando imágenes con nubes.
-            </div>
-            <div style="margin-top:0.7em;">
-              <b>Rangos NDVI para ${cultivo}:</b><br>
-              <ul style="margin:0.3em 0 0.3em 1.2em;">
-                <li>0.80 - 1.00: Excelente (vegetación densa)</li>
-                <li>0.60 - 0.79: Bueno (vegetación saludable)</li>
-                <li>0.40 - 0.59: Regular (estrés moderado)</li>
-                <li>0.20 - 0.39: Malo (estrés severo)</li>
-                <li>0.00 - 0.19: Crítico (suelo desnudo o vegetación muerta)</li>
-              </ul>
-            </div>
-          </li>
-          <li>${climaInfo || '🌡️ <b>Condiciones climáticas:</b> N/A'}${climaAnalisis}</li>
-          <li><b>🏔️ Subsidencia:</b> ${resultado.subsidencia.estado}<br>${resultado.subsidencia.descripcion}
-            <div style="margin-top:0.7em;">
-              <b>¿Qué es subsidencia?</b><br>
-              La subsidencia es el hundimiento gradual del terreno, que puede afectar la estabilidad de cultivos y estructuras agrícolas.
-            </div>
-            <div style="margin-top:0.7em;">
-              <b>¿Cómo lo medimos?</b><br>
-              Usamos radares satelitales (Sentinel-1) que detectan cambios milimétricos en la altura del suelo a lo largo del tiempo, permitiendo identificar zonas estables o con riesgo de hundimiento.
-            </div>
-            <div style="margin-top:0.7em;">
-              <b>Rangos de subsidencia:</b><br>
-              <ul style="margin:0.3em 0 0.3em 1.2em;">
-                <li>0-1 mm/año: Estable</li>
-                <li>1-3 mm/año: Ligeramente inestable</li>
-                <li>3-6 mm/año: Inestable</li>
-                <li>>6 mm/año: Crítico</li>
-              </ul>
-            </div>
-          </li>
+          <li><b>🌱 NDVI:</b> ${ndviValue !== null && ndviValue !== undefined ? ndviValue.toFixed(2) + ' (' + resultado.ndvi.porcentaje + '%)' : 'N/A'} - <b>${resultado.ndvi.estado}</b><br>${resultado.ndvi.descripcion}</li>
+          <li>${climaInfo || '🌡️ <b>Condiciones climáticas:</b> N/A'}</li>
+          <li><b>🏔️ Subsidencia:</b> ${resultado.subsidencia.estado}<br>${resultado.subsidencia.descripcion}</li>
           <li><b>🎯 Recomendaciones:</b><ul style="margin:0; padding-left:1.2em;">${resultado.recomendaciones.map(r => `<li>${r}</li>`).join('')}</ul></li>
           <li><b>📈 Puntuación general:</b> ${resultado.puntuacion.puntuacion}/100 (${resultado.puntuacion.nivel})</li>
-          ${resultado.puntuacion.esParcial ? `<li style="color:#b71c1c;"><b>Puntuación parcial:</b> basada solo en los datos disponibles (algunos factores no se evaluaron por falta de información)</li>` : ''}
-          ${advertencias.length > 0 ? `<li style="color:#b71c1c;">${advertencias.join('<br>')}</li>` : ''}
-          <li style="margin-top:0.3em;">
-            <span id="explicacion-puntuacion">${explicarPuntuacionGeneral({
-              ndvi: resultado.ndvi,
-              subsidencia: resultado.subsidencia,
-              clima: { temp, humidity },
-              cultivo,
-              rangos,
-              puntuacion: resultado.puntuacion.puntuacion,
-              penalizaciones: resultado.penalizaciones
-            })}</span>
-          </li>
-          <li style="margin-top:1.5em;">
-            <b>📚 GLOSARIO:</b><br>
-            <ul style="margin:0.3em 0 0.3em 1.2em;">
-              <li><b>NDVI:</b> Índice de Vegetación que mide el verdor y salud de las plantas (0-1, más alto = más sano).</li>
-              <li><b>Subsidencia:</b> Hundimiento gradual del terreno, medido en milímetros por año.</li>
-              <li><b>Sentinel-2:</b> Satélite europeo que provee imágenes multiespectrales para agricultura y medio ambiente.</li>
-              <li><b>Sentinel-1:</b> Satélite radar que detecta cambios en la superficie terrestre, útil para monitorear subsidencia.</li>
-              <li><b>Estabilidad del suelo:</b> Firmeza del terreno, importante para evitar daños en cultivos y estructuras.</li>
-              <li><b>Rangos NDVI:</b> Valores de referencia para interpretar la salud vegetal según el tipo de cultivo.</li>
-            </ul>
-          </li>
         `;
+        
         resultados.style.display = 'block';
         resultados.scrollIntoView({behavior:'smooth'});
-        // Mostrar mapa de resultado
+        
         if (!isNaN(parseFloat(lat)) && !isNaN(parseFloat(lon))) {
           mostrarMapaResultado(parseFloat(lat), parseFloat(lon));
         }
@@ -1225,27 +1073,33 @@
       }
     });
 
-    // Limpiar formulario y ocultar resultados
+    // Limpiar formulario
     clearBtn.addEventListener('click', function() {
       form.reset();
       resultados.style.display = 'none';
       resultadosLista.innerHTML = '';
     });
   </script>
+  
   <script>
+  // TRADUCCIONES COMPLETAS
   const translations = {
       es: {
           heroTitle: "AgroStable - Análisis Satelital Agrícola Inteligente",
           heroSubtitle: "Previene pérdidas en tu cultivo con datos satelitales en tiempo real",
           heroDescription: "Analiza la salud de tu plantación, condiciones climáticas y estabilidad del suelo usando tecnología espacial de última generación",
           heroButton: "Analizar mi finca gratis",
+          stat1: "15+ cultivos analizados",
+          stat2: "10m resolución espacial", 
+          stat3: "30 segundos análisis",
+          stat4: "<5% margen error",
           whatAnalyze: "¿Qué analizamos en tu finca?",
           ndviTitle: "NDVI - Salud de Plantas",
-          ndviDesc: "Usando imágenes multiespectrales de Sentinel-2, medimos la reflectancia infrarroja de tus cultivos. Valores altos indican vegetación densa y saludable, mientras valores bajos revelan estrés hídrico, deficiencias nutricionales, plagas o enfermedades. Nuestro algoritmo compara tu NDVI con rangos óptimos específicos para cada cultivo.",
+          ndviDesc: "Usando imágenes multiespectrales de Sentinel-2, medimos la reflectancia infrarroja de tus cultivos. Valores altos indican vegetación densa y saludable, mientras valores bajos revelan estrés hídrico, deficiencias nutricionales, plagas o enfermedades.",
           climateTitle: "Condiciones Climáticas",
-          climateDesc: "Datos meteorológicos actualizados cada hora desde estaciones globales: temperatura ambiente, humedad relativa, velocidad del viento y condiciones atmosféricas. Evaluamos si tu microclima actual favorece el crecimiento de tu cultivo específico según parámetros agronómicos establecidos.",
+          climateDesc: "Datos meteorológicos actualizados cada hora desde estaciones globales: temperatura ambiente, humedad relativa, velocidad del viento y condiciones atmosféricas.",
           soilTitle: "Estabilidad del Suelo",
-          soilDesc: "Tecnología radar de apertura sintética (SAR) de Sentinel-1 detecta movimientos milimétricos del terreno. Medimos subsidencia, expansión del suelo y microdeformaciones que pueden afectar sistemas de riego, estructuras agrícolas y desarrollo radicular de tus plantas.",
+          soilDesc: "Tecnología radar de apertura sintética (SAR) de Sentinel-1 detecta movimientos milimétricos del terreno. Medimos subsidencia, expansión del suelo y microdeformaciones.",
           howWorks: "Tecnología satelital al servicio de tu finca",
           step1: "Ingresa las coordenadas de tu finca",
           step2: "Nuestros algoritmos consultan satélites Sentinel en tiempo real",
@@ -1256,83 +1110,146 @@
           crops: "15 cultivos soportados",
           speed: "Análisis en menos de 30 segundos",
           cropsTitle: "Cultivos analizados",
+          formTitle: "Analiza tu finca ahora",
           analyzeFarm: "Analizar Finca",
+          clearBtn: "Limpiar",
           farmName: "Nombre de la finca",
           latitude: "Latitud",
           longitude: "Longitud",
           cropType: "Tipo de cultivo",
-          selectCrop: "Seleccione..."
+          selectCrop: "Seleccione...",
+          coffee: "Café",
+          tomato: "Tomate",
+          corn: "Maíz",
+          rice: "Arroz", 
+          potato: "Papa",
+          beans: "Frijol",
+          onion: "Cebolla",
+          lettuce: "Lechuga",
+          banana: "Plátano",
+          sugarcane: "Caña de azúcar",
+          cacao: "Cacao",
+          cassava: "Yuca",
+          flowers: "Flores",
+          wheat: "Trigo",
+          avocado: "Aguacate"
       },
       en: {
           heroTitle: "AgroStable - Intelligent Agricultural Satellite Analysis",
           heroSubtitle: "Prevent crop losses with real-time satellite data",
           heroDescription: "Analyze your plantation's health, weather conditions, and soil stability using cutting-edge space technology",
           heroButton: "Analyze my farm for free",
+          stat1: "15+ crops analyzed",
+          stat2: "10m spatial resolution",
+          stat3: "30 seconds analysis", 
+          stat4: "<5% error margin",
           whatAnalyze: "What do we analyze on your farm?",
           ndviTitle: "NDVI - Plant Health",
-          ndviDesc: "Using Sentinel-2 multispectral images, we measure the infrared reflectance of your crops. High values indicate dense, healthy vegetation, while low values reveal water stress, nutritional deficiencies, pests, or diseases. Our algorithm compares your NDVI to optimal ranges for each crop.",
+          ndviDesc: "Using Sentinel-2 multispectral images, we measure the infrared reflectance of your crops. High values indicate dense, healthy vegetation, while low values reveal water stress, nutritional deficiencies, pests, or diseases.",
           climateTitle: "Weather Conditions",
-          climateDesc: "Weather data updated hourly from global stations: air temperature, relative humidity, wind speed, and atmospheric conditions. We assess if your current microclimate favors the growth of your specific crop according to agronomic parameters.",
+          climateDesc: "Weather data updated hourly from global stations: air temperature, relative humidity, wind speed, and atmospheric conditions.",
           soilTitle: "Soil Stability",
-          soilDesc: "Synthetic aperture radar (SAR) technology from Sentinel-1 detects millimetric ground movements. We measure subsidence, soil expansion, and micro-deformations that can affect irrigation systems, agricultural structures, and root development.",
+          soilDesc: "Synthetic aperture radar (SAR) technology from Sentinel-1 detects millimetric ground movements. We measure subsidence, soil expansion, and micro-deformations.",
           howWorks: "Satellite technology at your farm's service",
           step1: "Enter your farm's coordinates",
           step2: "Our algorithms query Sentinel satellites in real time",
-          step3: "You receive a detailed analysis with specific recommendations",
+          step3: "You receive detailed analysis with specific recommendations",
           step4: "View the analyzed location on an interactive map",
           coverage: "Coverage: Worldwide",
           resolution: "Resolution: up to 10 meters",
           crops: "15 crops supported",
           speed: "Analysis in less than 30 seconds",
           cropsTitle: "Analyzed crops",
+          formTitle: "Analyze your farm now",
           analyzeFarm: "Analyze Farm",
+          clearBtn: "Clear",
           farmName: "Farm name",
           latitude: "Latitude",
           longitude: "Longitude",
           cropType: "Crop type",
-          selectCrop: "Select..."
+          selectCrop: "Select...",
+          coffee: "Coffee",
+          tomato: "Tomato",
+          corn: "Corn",
+          rice: "Rice",
+          potato: "Potato",
+          beans: "Beans",
+          onion: "Onion",
+          lettuce: "Lettuce",
+          banana: "Banana",
+          sugarcane: "Sugar cane",
+          cacao: "Cacao",
+          cassava: "Cassava",
+          flowers: "Flowers",
+          wheat: "Wheat",
+          avocado: "Avocado"
       },
       pt: {
           heroTitle: "AgroStable - Análise Satelital Agrícola Inteligente",
           heroSubtitle: "Previna perdas na sua cultura com dados satelitais em tempo real",
           heroDescription: "Analise a saúde da sua plantação, condições climáticas e estabilidade do solo usando tecnologia espacial de última geração",
           heroButton: "Analisar minha fazenda grátis",
+          stat1: "15+ culturas analisadas",
+          stat2: "10m resolução espacial",
+          stat3: "30 segundos análise",
+          stat4: "<5% margem de erro",
           whatAnalyze: "O que analisamos na sua fazenda?",
           ndviTitle: "NDVI - Saúde das Plantas",
-          ndviDesc: "Usando imagens multiespectrais do Sentinel-2, medimos a refletância infravermelha das suas culturas. Valores altos indicam vegetação densa e saudável, enquanto valores baixos revelam estresse hídrico, deficiências nutricionais, pragas ou doenças. Nosso algoritmo compara seu NDVI com faixas ideais para cada cultura.",
+          ndviDesc: "Usando imagens multiespectrais do Sentinel-2, medimos a refletância infravermelha das suas culturas. Valores altos indicam vegetação densa e saudável, enquanto valores baixos revelam estresse hídrico, deficiências nutricionais, pragas ou doenças.",
           climateTitle: "Condições Climáticas",
-          climateDesc: "Dados meteorológicos atualizados a cada hora de estações globais: temperatura do ar, umidade relativa, velocidade do vento e condições atmosféricas. Avaliamos se o seu microclima atual favorece o crescimento da sua cultura específica de acordo com parâmetros agronômicos.",
+          climateDesc: "Dados meteorológicos atualizados a cada hora de estações globais: temperatura do ar, umidade relativa, velocidade do vento e condições atmosféricas.",
           soilTitle: "Estabilidade do Solo",
-          soilDesc: "Tecnologia de radar de abertura sintética (SAR) do Sentinel-1 detecta movimentos milimétricos do solo. Medimos subsidência, expansão do solo e microdeformações que podem afetar sistemas de irrigação, estruturas agrícolas e desenvolvimento radicular.",
+          soilDesc: "Tecnologia de radar de abertura sintética (SAR) do Sentinel-1 detecta movimentos milimétricos do solo. Medimos subsidência, expansão do solo e microdeformações.",
           howWorks: "Tecnologia satelital a serviço da sua fazenda",
           step1: "Insira as coordenadas da sua fazenda",
           step2: "Nossos algoritmos consultam satélites Sentinel em tempo real",
-          step3: "Você recebe uma análise detalhada com recomendações específicas",
-          step4: "Visualize o local analisado em um mapa interativo",
+          step3: "Você recebe análise detalhada com recomendações específicas",
+          step4: "Visualize o local analisado em mapa interativo",
           coverage: "Cobertura: Mundial",
           resolution: "Resolução: até 10 metros",
           crops: "15 culturas suportadas",
           speed: "Análise em menos de 30 segundos",
           cropsTitle: "Culturas analisadas",
+          formTitle: "Analise sua fazenda agora",
           analyzeFarm: "Analisar Fazenda",
+          clearBtn: "Limpar",
           farmName: "Nome da fazenda",
           latitude: "Latitude",
           longitude: "Longitude",
           cropType: "Tipo de cultura",
-          selectCrop: "Selecione..."
+          selectCrop: "Selecione...",
+          coffee: "Café",
+          tomato: "Tomate",
+          corn: "Milho",
+          rice: "Arroz",
+          potato: "Batata",
+          beans: "Feijão",
+          onion: "Cebola",
+          lettuce: "Alface",
+          banana: "Banana",
+          sugarcane: "Cana de açúcar",
+          cacao: "Cacau",
+          cassava: "Mandioca",
+          flowers: "Flores",
+          wheat: "Trigo",
+          avocado: "Abacate"
       },
       fr: {
           heroTitle: "AgroStable - Analyse Satellitaire Agricole Intelligente",
           heroSubtitle: "Prévenez les pertes de récoltes avec des données satellitaires en temps réel",
           heroDescription: "Analysez la santé de votre plantation, les conditions climatiques et la stabilité du sol grâce à la technologie spatiale de dernière génération",
           heroButton: "Analyser ma ferme gratuitement",
+          stat1: "15+ cultures analysées",
+          stat2: "10m résolution spatiale",
+          stat3: "30 secondes d'analyse",
+          stat4: "<5% marge d'erreur",
           whatAnalyze: "Que analysons-nous sur votre ferme ?",
           ndviTitle: "NDVI - Santé des Plantes",
-          ndviDesc: "À l'aide d'images multispectrales Sentinel-2, nous mesurons la réflectance infrarouge de vos cultures. Des valeurs élevées indiquent une végétation dense et saine, tandis que des valeurs faibles révèlent un stress hydrique, des carences nutritionnelles, des ravageurs ou des maladies. Notre algorithme compare votre NDVI aux plages optimales pour chaque culture.",
+          ndviDesc: "À l'aide d'images multispectrales Sentinel-2, nous mesurons la réflectance infrarouge de vos cultures. Des valeurs élevées indiquent une végétation dense et saine, tandis que des valeurs faibles révèlent un stress hydrique, des carences nutritionnelles, des ravageurs ou des maladies.",
           climateTitle: "Conditions Climatiques",
-          climateDesc: "Données météorologiques mises à jour toutes les heures à partir de stations mondiales : température de l'air, humidité relative, vitesse du vent et conditions atmosphériques. Nous évaluons si votre microclimat actuel favorise la croissance de votre culture spécifique selon des paramètres agronomiques.",
+          climateDesc: "Données météorologiques mises à jour toutes les heures à partir de stations mondiales : température de l'air, humidité relative, vitesse du vent et conditions atmosphériques.",
           soilTitle: "Stabilité du Sol",
-          soilDesc: "La technologie radar à synthèse d'ouverture (SAR) de Sentinel-1 détecte les mouvements millimétriques du sol. Nous mesurons la subsidence, l'expansion du sol et les microdéformations pouvant affecter les systèmes d'irrigation, les structures agricoles et le développement racinaire.",
+          soilDesc: "La technologie radar à synthèse d'ouverture (SAR) de Sentinel-1 détecte les mouvements millimétriques du sol. Nous mesurons la subsidence, l'expansion du sol et les microdéformations.",
           howWorks: "Technologie satellitaire au service de votre ferme",
           step1: "Saisissez les coordonnées de votre ferme",
           step2: "Nos algorithmes interrogent les satellites Sentinel en temps réel",
@@ -1343,25 +1260,46 @@
           crops: "15 cultures prises en charge",
           speed: "Analyse en moins de 30 secondes",
           cropsTitle: "Cultures analysées",
+          formTitle: "Analysez votre ferme maintenant",
           analyzeFarm: "Analyser la Ferme",
+          clearBtn: "Effacer",
           farmName: "Nom de la ferme",
           latitude: "Latitude",
           longitude: "Longitude",
           cropType: "Type de culture",
-          selectCrop: "Sélectionner..."
+          selectCrop: "Sélectionner...",
+          coffee: "Café",
+          tomato: "Tomate",
+          corn: "Maïs",
+          rice: "Riz",
+          potato: "Pomme de terre",
+          beans: "Haricots",
+          onion: "Oignon",
+          lettuce: "Laitue",
+          banana: "Banane",
+          sugarcane: "Canne à sucre",
+          cacao: "Cacao",
+          cassava: "Manioc",
+          flowers: "Fleurs",
+          wheat: "Blé",
+          avocado: "Avocat"
       },
       it: {
           heroTitle: "AgroStable - Analisi Satellitare Agricola Intelligente",
           heroSubtitle: "Previeni le perdite del raccolto con dati satellitari in tempo reale",
           heroDescription: "Analizza la salute della tua piantagione, le condizioni climatiche e la stabilità del suolo utilizzando la più recente tecnologia spaziale",
           heroButton: "Analizza la mia fattoria gratis",
+          stat1: "15+ colture analizzate",
+          stat2: "10m risoluzione spaziale",
+          stat3: "30 secondi di analisi",
+          stat4: "<5% margine di errore",
           whatAnalyze: "Cosa analizziamo nella tua azienda?",
           ndviTitle: "NDVI - Salute delle Piante",
-          ndviDesc: "Utilizzando immagini multispettrali Sentinel-2, misuriamo la riflettanza infrarossa delle tue colture. Valori elevati indicano vegetazione densa e sana, mentre valori bassi rivelano stress idrico, carenze nutrizionali, parassiti o malattie. Il nostro algoritmo confronta il tuo NDVI con intervalli ottimali specifici per ogni coltura.",
-          climateTitle: "Condizioni Climatiche",
-          climateDesc: "Dati meteorologici aggiornati ogni ora da stazioni globali: temperatura dell'aria, umidità relativa, velocità del vento e condizioni atmosferiche. Valutiamo se il tuo microclima attuale favorisce la crescita della tua coltura specifica secondo parametri agronomici.",
+          ndviDesc: "Utilizzando immagini multispettrali Sentinel-2, misuriamo la riflettanza infrarossa delle tue colture. Valori elevati indicano vegetazione densa e sana, mentre valori bassi rivelano stress idrico, carenze nutrizionali, parassiti o malattie.",
+          climateTitle: "Condizioni Climatiche", 
+          climateDesc: "Dati meteorologici aggiornati ogni ora da stazioni globali: temperatura dell'aria, umidità relativa, velocità del vento e condizioni atmosferiche.",
           soilTitle: "Stabilità del Suolo",
-          soilDesc: "La tecnologia radar ad apertura sintetica (SAR) di Sentinel-1 rileva movimenti millimetrici del terreno. Misuriamo subsidenza, espansione del suolo e microdeformazioni che possono influenzare i sistemi di irrigazione, le strutture agricole e lo sviluppo radicale.",
+          soilDesc: "La tecnologia radar ad apertura sintetica (SAR) di Sentinel-1 rileva movimenti millimetrici del terreno. Misuriamo subsidenza, espansione del suolo e microdeformazioni.",
           howWorks: "Tecnologia satellitare al servizio della tua azienda",
           step1: "Inserisci le coordinate della tua azienda",
           step2: "I nostri algoritmi consultano i satelliti Sentinel in tempo reale",
@@ -1372,30 +1310,55 @@
           crops: "15 colture supportate",
           speed: "Analisi in meno di 30 secondi",
           cropsTitle: "Colture analizzate",
+          formTitle: "Analizza la tua fattoria ora",
           analyzeFarm: "Analizza Fattoria",
+          clearBtn: "Cancella",
           farmName: "Nome della fattoria",
           latitude: "Latitudine",
           longitude: "Longitudine",
           cropType: "Tipo di coltura",
-          selectCrop: "Seleziona..."
+          selectCrop: "Seleziona...",
+          coffee: "Caffè",
+          tomato: "Pomodoro",
+          corn: "Mais",
+          rice: "Riso",
+          potato: "Patata",
+          beans: "Fagioli",
+          onion: "Cipolla",
+          lettuce: "Lattuga",
+          banana: "Banana",
+          sugarcane: "Canna da zucchero",
+          cacao: "Cacao",
+          cassava: "Cassava",
+          flowers: "Fiori",
+          wheat: "Grano",
+          avocado: "Avocado"
       }
   };
 
   function changeLanguage() {
       const lang = document.getElementById('languageSelect').value;
       const texts = translations[lang];
+      
       Object.keys(texts).forEach(key => {
-          const element = document.querySelector(`[data-translate="${key}"]`);
-          if (element) {
-              if (element.tagName === 'INPUT' || element.tagName === 'OPTION') {
+          const elements = document.querySelectorAll(`[data-translate="${key}"]`);
+          elements.forEach(element => {
+              if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                   element.placeholder = texts[key];
-                  if (element.tagName === 'OPTION') element.textContent = texts[key];
-              } else {
+              } else if (element.tagName === 'OPTION') {
                   element.textContent = texts[key];
+              } else {
+                  // Para elementos con contenido mixto (como hero-title con icono)
+                  if (element.querySelector('.icon')) {
+                      const icon = element.querySelector('.icon');
+                      element.innerHTML = icon.outerHTML + texts[key].replace('🌱', '');
+                  } else {
+                      element.textContent = texts[key];
+                  }
               }
-          }
+          });
       });
   }
   </script>
 </body>
-</html> 
+</html>
