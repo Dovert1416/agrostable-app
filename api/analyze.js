@@ -16,14 +16,20 @@ export default async function handler(req, res) {
   try {
     const { latitude, longitude, cropType } = req.body;
     
-    // Aquí van las consultas a las APIs reales
-    // Por ahora, datos de prueba para verificar que funciona
-    
+    // Datos de prueba en el formato correcto
     res.status(200).json({
       ndvi: 0.75,
-      climate: { temperature: 28, humidity: 65 },
+      climate: { 
+        temperature: 28, 
+        humidity: 65 
+      },
       subsidence: 2.1,
-      recommendations: ["Riego óptimo", "Monitorear plagas"]
+      recommendations: [
+        "🌱 Mantener riego constante - NDVI bueno (75%)",
+        "💧 Monitorear humedad del suelo regularmente", 
+        "🏔️ Terreno estable - continuar prácticas actuales",
+        "📊 Repetir análisis en 15 días para seguimiento"
+      ]
     });
     
   } catch (error) {
