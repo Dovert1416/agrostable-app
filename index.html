@@ -698,45 +698,52 @@
 
         const data = await response.json();
         
-        // Mostrar resultados de la API
+        // Mostrar resultados de la API mejorada
         let ndviText = 'N/A - Sin datos';
         let climaText = 'N/A';
         let subsidenciaText = 'Sin datos';
+        let scoreText = 'N/A';
         
+        // NDVI con estado inteligente
         if (data.ndvi !== null && data.ndvi !== undefined) {
           const ndviPercent = Math.round(data.ndvi * 100);
-          let estado = 'REGULAR';
-          if (data.ndvi >= 0.8) estado = 'EXCELENTE';
-          else if (data.ndvi >= 0.6) estado = 'BUENO';
-          else if (data.ndvi >= 0.4) estado = 'REGULAR';
-          else if (data.ndvi >= 0.2) estado = 'MALO';
-          else estado = 'CRÍTICO';
-          
+          let estado = data.analysis?.ndvi?.status || 'REGULAR';
           ndviText = `${data.ndvi.toFixed(2)} (${ndviPercent}%) - ${estado}`;
         }
         
-        if (data.climate && data.climate.temperature) {
-          climaText = `${data.climate.temperature}°C, Humedad: ${data.climate.humidity || 'N/A'}%`;
+        // Clima mejorado
+        if (data.climate) {
+          const temp = data.climate.temperature || 'N/A';
+          const humidity = data.climate.humidity || 'N/A';
+          const desc = data.climate.description || '';
+          climaText = `${temp}°C, Humedad: ${humidity}% ${desc ? '(' + desc + ')' : ''}`;
         }
         
+        // Subsidencia con análisis
         if (data.subsidence !== null && data.subsidence !== undefined) {
-          let subsidenciaEstado = 'ESTABLE';
-          const valorAbs = Math.abs(data.subsidence);
-          if (valorAbs > 6) subsidenciaEstado = 'CRÍTICO';
-          else if (valorAbs > 3) subsidenciaEstado = 'INESTABLE';
-          else if (valorAbs > 1) subsidenciaEstado = 'LIGERAMENTE INESTABLE';
-          
+          let subsidenciaEstado = data.analysis?.subsidence?.status || 'SIN ANÁLISIS';
           subsidenciaText = `${data.subsidence} mm/año - ${subsidenciaEstado}`;
+        }
+        
+        // Puntuación final
+        if (data.score !== null && data.score !== undefined) {
+          let scoreLevel = '';
+          if (data.score >= 80) scoreLevel = 'EXCELENTE';
+          else if (data.score >= 60) scoreLevel = 'BUENO';
+          else if (data.score >= 40) scoreLevel = 'REGULAR';
+          else scoreLevel = 'CRÍTICO';
+          
+          scoreText = `${Math.round(data.score)}/100 (${scoreLevel})`;
         }
         
         const recommendations = data.recommendations || ['Mantener monitoreo regular', 'Seguir buenas prácticas agrícolas'];
         
         resultadosLista.innerHTML = `
-          <li><b>🌱 NDVI:</b> ${ndviText}<br>Estado de la vegetación según análisis satelital</li>
-          <li><b>🌡️ Condiciones climáticas:</b> ${climaText}<br>Datos meteorológicos actuales</li>
-          <li><b>🏔️ Subsidencia:</b> ${subsidenciaText}<br>Estabilidad del terreno</li>
-          <li><b>🎯 Recomendaciones:</b><ul style="margin:0; padding-left:1.2em;">${recommendations.map(r => `<li>${r}</li>`).join('')}</ul></li>
-          <li><b>📈 Análisis completado exitosamente</b></li>
+          <li><b>🌱 NDVI:</b> ${ndviText}<br><small>Estado de la vegetación según análisis satelital específico para ${cultivo}</small></li>
+          <li><b>🌡️ Condiciones climáticas:</b> ${climaText}<br><small>Datos meteorológicos evaluados para ${cultivo}</small></li>
+          <li><b>🏔️ Subsidencia:</b> ${subsidenciaText}<br><small>Análisis de estabilidad del terreno</small></li>
+          <li><b>📊 Puntuación general:</b> ${scoreText}<br><small>Evaluación integral basada en algoritmos específicos para ${cultivo}</small></li>
+          <li><b>🎯 Recomendaciones específicas:</b><ul style="margin:8px 0; padding-left:1.2em; line-height:1.4;">${recommendations.map(r => `<li style="margin-bottom:4px;">${r}</li>`).join('')}</ul></li>
         `;
         
         resultados.style.display = 'block';
