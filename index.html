@@ -738,12 +738,128 @@
         
         const recommendations = data.recommendations || ['Mantener monitoreo regular', 'Seguir buenas prácticas agrícolas'];
         
+        // Generar rangos NDVI específicos por cultivo
+        let ndviRanges = '';
+        if (cultivo === 'Café') {
+          ndviRanges = `
+            <strong>Rangos NDVI para Café:</strong><br>
+            • 0.80 - 1.00: Excelente (vegetación densa)<br>
+            • 0.60 - 0.79: Bueno (vegetación saludable)<br>
+            • 0.40 - 0.59: Regular (estrés moderado)<br>
+            • 0.20 - 0.39: Malo (estrés severo)<br>
+            • 0.00 - 0.19: Crítico (suelo desnudo o vegetación muerta)
+          `;
+        } else if (cultivo === 'Tomate') {
+          ndviRanges = `
+            <strong>Rangos NDVI para Tomate:</strong><br>
+            • 0.75 - 1.00: Excelente (vegetación densa)<br>
+            • 0.55 - 0.74: Bueno (vegetación saludable)<br>
+            • 0.35 - 0.54: Regular (estrés moderado)<br>
+            • 0.15 - 0.34: Malo (estrés severo)<br>
+            • 0.00 - 0.14: Crítico (suelo desnudo o vegetación muerta)
+          `;
+        } else {
+          ndviRanges = `
+            <strong>Rangos NDVI para ${cultivo}:</strong><br>
+            • 0.80 - 1.00: Excelente<br>
+            • 0.60 - 0.79: Bueno<br>
+            • 0.40 - 0.59: Regular<br>
+            • 0.20 - 0.39: Malo<br>
+            • 0.00 - 0.19: Crítico
+          `;
+        }
+
+        // Explicación de puntuación detallada
+        let scoreExplanation = '';
+        if (data.analysis) {
+          scoreExplanation = '<br><strong>¿Por qué esta puntuación?</strong><br>';
+          if (data.analysis.ndvi) {
+            scoreExplanation += `• <strong>NDVI ${data.analysis.ndvi.status}</strong> (-${data.analysis.ndvi.penalty} puntos): `;
+            if (data.analysis.ndvi.status === 'CRÍTICO') scoreExplanation += 'Vegetación muy escasa o suelo desnudo.';
+            else if (data.analysis.ndvi.status === 'BUENO') scoreExplanation += 'Vegetación saludable.';
+            else if (data.analysis.ndvi.status === 'EXCELENTE') scoreExplanation += 'Vegetación óptima y densa.';
+            else scoreExplanation += 'Estado de vegetación intermedio.';
+            scoreExplanation += '<br>';
+          }
+          if (data.analysis.subsidence) {
+            scoreExplanation += `• <strong>Subsidencia ${data.analysis.subsidence.status}</strong> (-${data.analysis.subsidence.penalty} puntos): `;
+            if (data.analysis.subsidence.status === 'CRÍTICO') scoreExplanation += 'Terreno inestable amenaza la infraestructura.';
+            else if (data.analysis.subsidence.status === 'ESTABLE') scoreExplanation += 'Terreno completamente estable.';
+            else scoreExplanation += 'Ligera inestabilidad del terreno.';
+            scoreExplanation += '<br>';
+          }
+          if (data.analysis.temperature) {
+            const tempPenalty = data.analysis.temperature.penalty || 0;
+            if (tempPenalty > 0) {
+              scoreExplanation += `• <strong>Temperatura</strong> (-${tempPenalty} puntos): Fuera del rango óptimo para ${cultivo}.<br>`;
+            }
+          }
+          if (data.analysis.humidity) {
+            const humPenalty = data.analysis.humidity.penalty || 0;
+            if (humPenalty > 0) {
+              scoreExplanation += `• <strong>Humedad</strong> (-${humPenalty} puntos): Nivel inadecuado para ${cultivo}.<br>`;
+            }
+          }
+        }
+
         resultadosLista.innerHTML = `
-          <li><b>🌱 NDVI:</b> ${ndviText}<br><small>Estado de la vegetación según análisis satelital específico para ${cultivo}</small></li>
-          <li><b>🌡️ Condiciones climáticas:</b> ${climaText}<br><small>Datos meteorológicos evaluados para ${cultivo}</small></li>
-          <li><b>🏔️ Subsidencia:</b> ${subsidenciaText}<br><small>Análisis de estabilidad del terreno</small></li>
-          <li><b>📊 Puntuación general:</b> ${scoreText}<br><small>Evaluación integral basada en algoritmos específicos para ${cultivo}</small></li>
-          <li><b>🎯 Recomendaciones específicas:</b><ul style="margin:8px 0; padding-left:1.2em; line-height:1.4;">${recommendations.map(r => `<li style="margin-bottom:4px;">${r}</li>`).join('')}</ul></li>
+          <div style="line-height: 1.6; color: #333;">
+            <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #2E7D32;">🌱 NDVI: ${ndviText}</h4>
+              <p style="margin: 8px 0;"><strong>Tu plantación de ${cultivo} está en estado ${data.analysis?.ndvi?.status?.toLowerCase() || 'desconocido'}.</strong></p>
+              <p style="margin: 8px 0;"><strong>¿Qué significa esto?</strong><br>
+              El NDVI (Índice de Vegetación de Diferencia Normalizada) indica el vigor y salud de la vegetación. Valores altos significan plantas sanas y densas; valores bajos indican estrés, escasez o muerte vegetal.</p>
+              <p style="margin: 8px 0;"><strong>¿De dónde sale este dato?</strong><br>
+              Analizamos tu finca con múltiples imágenes satelitales (Sentinel-2) de los últimos 30 días que miden el "verdor" de las plantas usando bandas del espectro visible e infrarrojo.</p>
+              <div style="margin: 10px 0; font-size: 14px; background: #e8f5e8; padding: 10px; border-radius: 5px;">
+                ${ndviRanges}
+              </div>
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #1976D2;">🌡️ Condiciones climáticas: ${climaText}</h4>
+              <p style="margin: 8px 0;"><strong>Análisis climático para ${cultivo}:</strong></p>
+              ${data.climate ? `
+                <p style="margin: 5px 0;">• Temperatura: ${data.climate.temperature}°C - ${data.climate.temperature >= 18 && data.climate.temperature <= 26 ? 'ÓPTIMA' : 'FUERA DEL RANGO'} para ${cultivo} (ideal: 18-26°C).</p>
+                <p style="margin: 5px 0;">• Humedad: ${data.climate.humidity}% - ${data.climate.humidity >= 60 && data.climate.humidity <= 80 ? 'ADECUADA' : 'INADECUADA'} para ${cultivo} (ideal: 60-80%).</p>
+              ` : '<p>Datos climáticos no disponibles</p>'}
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #795548;">🏔️ Subsidencia: ${subsidenciaText}</h4>
+              <p style="margin: 8px 0;"><strong>¿Qué es subsidencia?</strong><br>
+              La subsidencia es el hundimiento gradual del terreno, que puede afectar la estabilidad de cultivos y estructuras agrícolas.</p>
+              <p style="margin: 8px 0;"><strong>¿Cómo lo medimos?</strong><br>
+              Usamos radares satelitales (Sentinel-1) que detectan cambios milimétricos en la altura del suelo a lo largo del tiempo.</p>
+              <div style="margin: 10px 0; font-size: 14px; background: #e8f5e8; padding: 10px; border-radius: 5px;">
+                <strong>Rangos de subsidencia:</strong><br>
+                • 0-1 mm/año: Estable<br>
+                • 1-3 mm/año: Ligeramente inestable<br>
+                • 3-6 mm/año: Inestable<br>
+                • >6 mm/año: Crítico
+              </div>
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f0f8ff; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #1976D2;">🎯 Recomendaciones específicas:</h4>
+              <ul style="margin: 8px 0; padding-left: 20px; line-height: 1.5;">
+                ${recommendations.map(r => `<li style="margin-bottom: 8px;">${r}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #fff3e0; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #F57C00;">📊 Puntuación general: ${scoreText}</h4>
+              ${scoreExplanation}
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f3e5f5; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #7B1FA2;">📚 GLOSARIO:</h4>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>NDVI:</strong> Índice de Vegetación que mide el verdor y salud de las plantas (0-1, más alto = más sano).</p>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>Subsidencia:</strong> Hundimiento gradual del terreno, medido en milímetros por año.</p>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>Sentinel-2:</strong> Satélite europeo que provee imágenes multiespectrales para agricultura.</p>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>Sentinel-1:</strong> Satélite radar que detecta cambios en la superficie terrestre.</p>
+            </div>
+          </div>
         `;
         
         resultados.style.display = 'block';
