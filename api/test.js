@@ -1,4 +1,4 @@
-import { createClient } from '@supabase/supabase-js'
+const { createClient } = require('@supabase/supabase-js')
 
 const supabaseUrl = 'https://ahcwnifxpmrzqpykagxa.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFoY3duaWZ4cG1yenFweWthZ3hhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTI2OTcwMDEsImV4cCI6MjA2ODI3MzAwMX0.m6MGKUb6FU5LKHhWDLrI8h9wKn9nOtxMo5EVnkr7ycs'
