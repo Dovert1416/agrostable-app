@@ -25,7 +25,7 @@
       line-height: 1.6;
     }
     
-    /* SELECTOR DE IDIOMAS - ARREGLADO */
+    /* SELECTOR DE IDIOMAS */
     .language-selector {
         position: absolute;
         top: 20px;
@@ -48,11 +48,8 @@
         color: #2E7D32;
         outline: none;
     }
-    .language-selector select:hover {
-        color: #1976D2;
-    }
     
-    /* HERO SECTION - ARREGLADO */
+    /* HERO SECTION */
     .hero {
       background: linear-gradient(135deg, rgba(46,125,50,0.92) 0%, rgba(25,118,210,0.88) 100%), url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
       color: #fff;
@@ -152,7 +149,7 @@
       margin-right: 8px;
     }
     
-    /* SEPARACIÓN ENTRE SECCIONES */
+    /* SECCIONES */
     .section {
       width: 100%;
       max-width: 1200px;
@@ -218,7 +215,7 @@
       text-align: left;
     }
     
-    /* SECCIÓN TECNOLOGÍA (GRID) */
+    /* SECCIÓN TECNOLOGÍA */
     .funciona-steps {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -430,44 +427,10 @@
     }
     
     /* Responsive */
-    @media (max-width: 1200px) {
-      .section, .main-container { max-width: 98vw; }
-      .funciona-steps { max-width: 98vw; }
-    }
-    @media (max-width: 1024px) {
-      .section, .main-container { padding: 24px 8px; }
-      .hero { padding: 80px 8px 80px 8px; min-height: 80vh; }
-      .funciona-steps { grid-template-columns: repeat(2, 1fr); }
-      .hero-title { font-size: 2.5rem; }
-      .hero-subtitle { font-size: 1.4rem; }
-    }
     @media (max-width: 768px) {
-      .analizamos-cards, .funciona-datos { flex-direction: column; gap: 18px; }
-      .section, .main-container { padding: 16px 2vw; }
-      .hero { padding: 60px 2vw 60px 2vw; min-height: 70vh; }
-      .form-section-title { font-size: 1.3rem; }
-      .funciona-steps { grid-template-columns: 1fr 1fr; }
       .hero-title { font-size: 2rem; }
       .hero-subtitle { font-size: 1.2rem; }
       .hero-desc { font-size: 1.1rem; }
-      .language-selector {
-        top: 15px;
-        right: 15px;
-        padding: 8px 12px;
-      }
-    }
-    @media (max-width: 600px) {
-      .funciona-steps { grid-template-columns: 1fr; }
-      .hero-stats { gap: 20px; }
-      .hero-stat { min-width: 150px; padding: 18px 24px; }
-    }
-    @media (max-width: 480px) {
-      .section, .main-container { padding: 8px 0; }
-      .hero-title { font-size: 1.6rem; }
-      .hero-subtitle { font-size: 1.1rem; }
-      .hero-desc { font-size: 0.98rem; }
-      .form-section-title { font-size: 1.1rem; }
-      .hero { padding: 40px 1rem 40px 1rem; }
     }
     
     /* Navegación suave */
@@ -477,9 +440,9 @@
   </style>
 </head>
 <body>
-  <!-- SELECTOR DE IDIOMAS ARREGLADO -->
+  <!-- SELECTOR DE IDIOMAS -->
   <div class="language-selector">
-    <select id="languageSelect" onchange="changeLanguage()">
+    <select id="languageSelect">
         <option value="es">🇪🇸 Español</option>
         <option value="en">🇺🇸 English</option>
         <option value="pt">🇵🇹 Português</option>
@@ -488,100 +451,100 @@
     </select>
   </div>
   
-  <!-- HERO SECTION ARREGLADO -->
+  <!-- HERO SECTION -->
   <section class="hero" id="hero">
-    <div class="hero-title" data-translate="heroTitle"><span class="icon">🌱</span>AgroStable - Análisis Satelital Agrícola Inteligente</div>
-    <div class="hero-subtitle" data-translate="heroSubtitle">Previene pérdidas en tu cultivo con datos satelitales en tiempo real</div>
-    <div class="hero-desc" data-translate="heroDescription">Analiza la salud de tu plantación, condiciones climáticas y estabilidad del suelo usando tecnología espacial de última generación</div>
-    <button class="hero-cta" data-translate="heroButton" onclick="document.getElementById('form-section').scrollIntoView({behavior:'smooth'})">Analizar mi finca gratis</button>
+    <div class="hero-title"><span class="icon">🌱</span>AgroStable - Análisis Satelital Agrícola Inteligente</div>
+    <div class="hero-subtitle">Previene pérdidas en tu cultivo con datos satelitales en tiempo real</div>
+    <div class="hero-desc">Analiza la salud de tu plantación, condiciones climáticas y estabilidad del suelo usando tecnología espacial de última generación</div>
+    <button class="hero-cta" onclick="document.getElementById('form-section').scrollIntoView({behavior:'smooth'})">Analizar mi finca gratis</button>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-icon">📡</span><span data-translate="stat1">15+ cultivos analizados</span></div>
-      <div class="hero-stat"><span class="hero-stat-icon">🛰️</span><span data-translate="stat2">10m resolución espacial</span></div>
-      <div class="hero-stat"><span class="hero-stat-icon">⏱️</span><span data-translate="stat3">30 segundos análisis</span></div>
-      <div class="hero-stat"><span class="hero-stat-icon">📊</span><span data-translate="stat4"><5% margen error</span></div>
+      <div class="hero-stat"><span class="hero-stat-icon">📡</span><span>15+ cultivos analizados</span></div>
+      <div class="hero-stat"><span class="hero-stat-icon">🛰️</span><span>10m resolución espacial</span></div>
+      <div class="hero-stat"><span class="hero-stat-icon">⏱️</span><span>30 segundos análisis</span></div>
+      <div class="hero-stat"><span class="hero-stat-icon">📊</span><span><5% margen error</span></div>
     </div>
   </section>
 
   <!-- QUÉ ANALIZAMOS -->
   <section class="section" id="analizamos">
-    <h2 style="text-align:center; color:#2E7D32; font-size:2rem; font-weight:700; margin-bottom:18px;" data-translate="whatAnalyze">¿Qué analizamos en tu finca?</h2>
+    <h2 style="text-align:center; color:#2E7D32; font-size:2rem; font-weight:700; margin-bottom:18px;">¿Qué analizamos en tu finca?</h2>
     <div class="analizamos-cards">
       <div class="analizamos-card">
         <span class="analizamos-icon">🌱</span>
-        <div class="analizamos-title" data-translate="ndviTitle">NDVI - Salud de Plantas</div>
-        <div class="analizamos-desc" data-translate="ndviDesc">Usando imágenes multiespectrales de Sentinel-2, medimos la reflectancia infrarroja de tus cultivos. Valores altos indican vegetación densa y saludable, mientras valores bajos revelan estrés hídrico, deficiencias nutricionales, plagas o enfermedades. Nuestro algoritmo compara tu NDVI con rangos óptimos específicos para cada cultivo.</div>
+        <div class="analizamos-title">NDVI - Salud de Plantas</div>
+        <div class="analizamos-desc">Usando imágenes multiespectrales de Sentinel-2, medimos la reflectancia infrarroja de tus cultivos. Valores altos indican vegetación densa y saludable, mientras valores bajos revelan estrés hídrico, deficiencias nutricionales, plagas o enfermedades. Nuestro algoritmo compara tu NDVI con rangos óptimos específicos para cada cultivo.</div>
       </div>
       <div class="analizamos-card">
         <span class="analizamos-icon">🌤️</span>
-        <div class="analizamos-title" data-translate="climateTitle">Condiciones Climáticas</div>
-        <div class="analizamos-desc" data-translate="climateDesc">Datos meteorológicos actualizados cada hora desde estaciones globales: temperatura ambiente, humedad relativa, velocidad del viento y condiciones atmosféricas. Evaluamos si tu microclima actual favorece el crecimiento de tu cultivo específico según parámetros agronómicos establecidos.</div>
+        <div class="analizamos-title">Condiciones Climáticas</div>
+        <div class="analizamos-desc">Datos meteorológicos actualizados cada hora desde estaciones globales: temperatura ambiente, humedad relativa, velocidad del viento y condiciones atmosféricas. Evaluamos si tu microclima actual favorece el crecimiento de tu cultivo específico según parámetros agronómicos establecidos.</div>
       </div>
       <div class="analizamos-card">
         <span class="analizamos-icon">🏔️</span>
-        <div class="analizamos-title" data-translate="soilTitle">Estabilidad del Suelo</div>
-        <div class="analizamos-desc" data-translate="soilDesc">Tecnología radar de apertura sintética (SAR) de Sentinel-1 detecta movimientos milimétricos del terreno. Medimos subsidencia, expansión del suelo y microdeformaciones que pueden afectar sistemas de riego, estructuras agrícolas y desarrollo radicular de tus plantas.</div>
+        <div class="analizamos-title">Estabilidad del Suelo</div>
+        <div class="analizamos-desc">Tecnología radar de apertura sintética (SAR) de Sentinel-1 detecta movimientos milimétricos del terreno. Medimos subsidencia, expansión del suelo y microdeformaciones que pueden afectar sistemas de riego, estructuras agrícolas y desarrollo radicular de tus plantas.</div>
       </div>
     </div>
   </section>
 
   <!-- CÓMO FUNCIONA -->
   <section class="section bg-alt" id="funciona">
-    <h2 style="text-align:center; color:#1976d2; font-size:2rem; font-weight:700; margin-bottom:18px;" data-translate="howWorks">Tecnología satelital al servicio de tu finca</h2>
+    <h2 style="text-align:center; color:#1976d2; font-size:2rem; font-weight:700; margin-bottom:18px;">Tecnología satelital al servicio de tu finca</h2>
     <div class="funciona-steps">
       <div class="funciona-step">
         <span class="funciona-step-icon">📍</span>
         <span class="funciona-step-num">1</span>
-        <div class="funciona-step-desc" data-translate="step1">Ingresa las coordenadas de tu finca</div>
+        <div class="funciona-step-desc">Ingresa las coordenadas de tu finca</div>
       </div>
       <div class="funciona-step">
         <span class="funciona-step-icon">🛰️</span>
         <span class="funciona-step-num">2</span>
-        <div class="funciona-step-desc" data-translate="step2">Nuestros algoritmos consultan satélites Sentinel en tiempo real</div>
+        <div class="funciona-step-desc">Nuestros algoritmos consultan satélites Sentinel en tiempo real</div>
       </div>
       <div class="funciona-step">
         <span class="funciona-step-icon">📡</span>
         <span class="funciona-step-num">3</span>
-        <div class="funciona-step-desc" data-translate="step3">Recibes análisis detallado con recomendaciones específicas</div>
+        <div class="funciona-step-desc">Recibes análisis detallado con recomendaciones específicas</div>
       </div>
       <div class="funciona-step">
         <span class="funciona-step-icon">📊</span>
         <span class="funciona-step-num">4</span>
-        <div class="funciona-step-desc" data-translate="step4">Visualiza la ubicación analizada en mapa interactivo</div>
+        <div class="funciona-step-desc">Visualiza la ubicación analizada en mapa interactivo</div>
       </div>
     </div>
     <div class="funciona-datos">
-      <div class="funciona-dato"><span class="funciona-dato-icon">📡</span><span data-translate="coverage">Cobertura: Mundial</span></div>
-      <div class="funciona-dato"><span class="funciona-dato-icon">🛰️</span><span data-translate="resolution">Resolución: hasta 10 metros</span></div>
-      <div class="funciona-dato"><span class="funciona-dato-icon">🌱</span><span data-translate="crops">15 cultivos soportados</span></div>
-      <div class="funciona-dato"><span class="funciona-dato-icon">⏱️</span><span data-translate="speed">Análisis en menos de 30 segundos</span></div>
+      <div class="funciona-dato"><span class="funciona-dato-icon">📡</span><span>Cobertura: Mundial</span></div>
+      <div class="funciona-dato"><span class="funciona-dato-icon">🛰️</span><span>Resolución: hasta 10 metros</span></div>
+      <div class="funciona-dato"><span class="funciona-dato-icon">🌱</span><span>15 cultivos soportados</span></div>
+      <div class="funciona-dato"><span class="funciona-dato-icon">⏱️</span><span>Análisis en menos de 30 segundos</span></div>
     </div>
   </section>
 
   <!-- CULTIVOS SOPORTADOS -->
   <section class="section" id="cultivos">
-    <h2 style="text-align:center; color:#2E7D32; font-size:2rem; font-weight:700; margin-bottom:18px;" data-translate="cropsTitle">Cultivos analizados</h2>
+    <h2 style="text-align:center; color:#2E7D32; font-size:2rem; font-weight:700; margin-bottom:18px;">Cultivos analizados</h2>
     <div class="cultivos-grid">
-      <div class="cultivo-item" data-translate="coffee">Café</div>
-      <div class="cultivo-item" data-translate="tomato">Tomate</div>
-      <div class="cultivo-item" data-translate="corn">Maíz</div>
-      <div class="cultivo-item" data-translate="rice">Arroz</div>
-      <div class="cultivo-item" data-translate="potato">Papa</div>
-      <div class="cultivo-item" data-translate="beans">Frijol</div>
-      <div class="cultivo-item" data-translate="onion">Cebolla</div>
-      <div class="cultivo-item" data-translate="lettuce">Lechuga</div>
-      <div class="cultivo-item" data-translate="banana">Plátano</div>
-      <div class="cultivo-item" data-translate="sugarcane">Caña de azúcar</div>
-      <div class="cultivo-item" data-translate="cacao">Cacao</div>
-      <div class="cultivo-item" data-translate="cassava">Yuca</div>
-      <div class="cultivo-item" data-translate="flowers">Flores</div>
-      <div class="cultivo-item" data-translate="wheat">Trigo</div>
-      <div class="cultivo-item" data-translate="avocado">Aguacate</div>
+      <div class="cultivo-item">Café</div>
+      <div class="cultivo-item">Tomate</div>
+      <div class="cultivo-item">Maíz</div>
+      <div class="cultivo-item">Arroz</div>
+      <div class="cultivo-item">Papa</div>
+      <div class="cultivo-item">Frijol</div>
+      <div class="cultivo-item">Cebolla</div>
+      <div class="cultivo-item">Lechuga</div>
+      <div class="cultivo-item">Plátano</div>
+      <div class="cultivo-item">Caña de azúcar</div>
+      <div class="cultivo-item">Cacao</div>
+      <div class="cultivo-item">Yuca</div>
+      <div class="cultivo-item">Flores</div>
+      <div class="cultivo-item">Trigo</div>
+      <div class="cultivo-item">Aguacate</div>
     </div>
   </section>
 
   <!-- FORMULARIO Y RESULTADOS -->
   <section class="section bg-alt" id="form-section" style="padding-left:24px; padding-right:24px; margin:60px auto 80px auto;">
-    <div class="form-section-title" data-translate="formTitle">Analiza tu finca ahora</div>
+    <div class="form-section-title">Analiza tu finca ahora</div>
     <div class="main-container">
       <div class="header">
         <div class="logo"><span class="icon">🌱</span>AgroStable</div>
@@ -589,18 +552,297 @@
       </div>
       <form id="farm-form" style="width:100%; max-width:600px; margin:0 auto; display:block; background:none; box-shadow:none; padding:0; border-radius:0;">
         <div class="form-group">
-          <label for="farm-name" data-translate="farmName">Nombre de la finca</label>
+          <label for="farm-name">Nombre de la finca</label>
           <input type="text" id="farm-name" name="farm-name" required>
         </div>
         <div class="form-group">
-          <label for="latitud" data-translate="latitude">Latitud</label>
+          <label for="latitud">Latitud</label>
           <input type="number" id="latitud" name="latitude" step="any" required>
         </div>
         <div class="form-group">
-          <label for="longitud" data-translate="longitude">Longitud</label>
+          <label for="longitud">Longitud</label>
           <input type="number" id="longitud" name="longitude" step="any" required>
         </div>
         <div class="form-group">
-          <label for="crop-type" data-translate="cropType">Tipo de cultivo</label>
+          <label for="crop-type">Tipo de cultivo</label>
           <select id="crop-type" name="crop-type" required>
-            <option value=""
+            <option value="">Seleccione...</option>
+            <option value="Café">Café</option>
+            <option value="Tomate">Tomate</option>
+            <option value="Maíz">Maíz</option>
+            <option value="Arroz">Arroz</option>
+            <option value="Papa">Papa</option>
+            <option value="Frijol">Frijol</option>
+            <option value="Cebolla">Cebolla</option>
+            <option value="Lechuga">Lechuga</option>
+            <option value="Plátano">Plátano</option>
+            <option value="Caña de azúcar">Caña de azúcar</option>
+            <option value="Cacao">Cacao</option>
+            <option value="Yuca">Yuca</option>
+            <option value="Flores">Flores</option>
+            <option value="Trigo">Trigo</option>
+            <option value="Aguacate">Aguacate</option>
+          </select>
+        </div>
+        <div class="form-actions" style="display:flex; gap:20px; margin-top:8px; justify-content:center;">
+          <button type="submit">Analizar Finca</button>
+          <button type="button" id="clear-btn">Limpiar</button>
+        </div>
+      </form>
+      <section id="resultados">
+        <div id="result-map" style="height: 300px; border-radius: 12px; margin: 20px 0; display: none;"></div>
+        <div id="resultados-lista"></div>
+      </section>
+    </div>
+  </section>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const form = document.getElementById('farm-form');
+    const resultados = document.getElementById('resultados');
+    const resultadosLista = document.getElementById('resultados-lista');
+    const clearBtn = document.getElementById('clear-btn');
+
+    // LEAFLET MAPA DE RESULTADO
+    let resultMap = null;
+    let resultMarker = null;
+    function mostrarMapaResultado(lat, lng) {
+      const mapDiv = document.getElementById('result-map');
+      mapDiv.style.display = 'block';
+      mapDiv.innerHTML = '';
+      
+      if (!document.getElementById('result-map-title')) {
+        const title = document.createElement('div');
+        title.id = 'result-map-title';
+        title.textContent = '📍 Ubicación Analizada';
+        title.style.fontWeight = '600';
+        title.style.fontSize = '18px';
+        title.style.marginBottom = '8px';
+        mapDiv.parentNode.insertBefore(title, mapDiv);
+      }
+      
+      resultMap = L.map('result-map').setView([lat, lng], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(resultMap);
+      resultMarker = L.marker([lat, lng]).addTo(resultMap);
+    }
+
+    // SUBMIT DEL FORMULARIO CON API CORREGIDA
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      try {
+        const nombre = document.getElementById('farm-name').value.trim();
+        const lat = document.getElementById('latitud').value.trim();
+        const lon = document.getElementById('longitud').value.trim();
+        const cultivo = document.getElementById('crop-type').value;
+        
+        if (!nombre || !lat || !lon || !cultivo) {
+          alert('Por favor, complete todos los campos.');
+          return;
+        }
+        
+        resultadosLista.innerHTML = '<li>🔄 Analizando datos satelitales y climáticos...</li>';
+        resultados.style.display = 'block';
+        
+        // LLAMADA A LA API CORREGIDA
+        const response = await fetch('/api/test', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            latitude: parseFloat(lat),
+            longitude: parseFloat(lon),
+            cropType: cultivo
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error HTTP: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        // Mostrar resultados de la API mejorada
+        let ndviText = 'N/A - Sin datos';
+        let climaText = 'N/A';
+        let subsidenciaText = 'Sin datos';
+        let scoreText = 'N/A';
+        
+        // NDVI con estado inteligente
+        if (data.ndvi !== null && data.ndvi !== undefined) {
+          const ndviPercent = Math.round(data.ndvi * 100);
+          let estado = data.analysis?.ndvi?.status || 'REGULAR';
+          ndviText = `${data.ndvi.toFixed(2)} (${ndviPercent}%) - ${estado}`;
+        }
+        
+        // Clima mejorado
+        if (data.climate) {
+          const temp = data.climate.temperature || 'N/A';
+          const humidity = data.climate.humidity || 'N/A';
+          const desc = data.climate.description || '';
+          climaText = `${temp}°C, Humedad: ${humidity}% ${desc ? '(' + desc + ')' : ''}`;
+        }
+        
+        // Subsidencia con análisis
+        if (data.subsidence !== null && data.subsidence !== undefined) {
+          let subsidenciaEstado = data.analysis?.subsidence?.status || 'SIN ANÁLISIS';
+          subsidenciaText = `${data.subsidence} mm/año - ${subsidenciaEstado}`;
+        }
+        
+        // Puntuación final
+        if (data.score !== null && data.score !== undefined) {
+          let scoreLevel = '';
+          if (data.score >= 80) scoreLevel = 'EXCELENTE';
+          else if (data.score >= 60) scoreLevel = 'BUENO';
+          else if (data.score >= 40) scoreLevel = 'REGULAR';
+          else scoreLevel = 'CRÍTICO';
+          
+          scoreText = `${Math.round(data.score)}/100 (${scoreLevel})`;
+        }
+        
+        const recommendations = data.recommendations || ['Mantener monitoreo regular', 'Seguir buenas prácticas agrícolas'];
+        
+        // Generar rangos NDVI específicos por cultivo
+        let ndviRanges = '';
+        if (cultivo === 'Café') {
+          ndviRanges = `
+            <strong>Rangos NDVI para Café:</strong><br>
+            • 0.80 - 1.00: Excelente (vegetación densa)<br>
+            • 0.60 - 0.79: Bueno (vegetación saludable)<br>
+            • 0.40 - 0.59: Regular (estrés moderado)<br>
+            • 0.20 - 0.39: Malo (estrés severo)<br>
+            • 0.00 - 0.19: Crítico (suelo desnudo o vegetación muerta)
+          `;
+        } else if (cultivo === 'Tomate') {
+          ndviRanges = `
+            <strong>Rangos NDVI para Tomate:</strong><br>
+            • 0.75 - 1.00: Excelente (vegetación densa)<br>
+            • 0.55 - 0.74: Bueno (vegetación saludable)<br>
+            • 0.35 - 0.54: Regular (estrés moderado)<br>
+            • 0.15 - 0.34: Malo (estrés severo)<br>
+            • 0.00 - 0.14: Crítico (suelo desnudo o vegetación muerta)
+          `;
+        } else {
+          ndviRanges = `
+            <strong>Rangos NDVI para ${cultivo}:</strong><br>
+            • 0.80 - 1.00: Excelente<br>
+            • 0.60 - 0.79: Bueno<br>
+            • 0.40 - 0.59: Regular<br>
+            • 0.20 - 0.39: Malo<br>
+            • 0.00 - 0.19: Crítico
+          `;
+        }
+
+        // Explicación de puntuación detallada
+        let scoreExplanation = '';
+        if (data.analysis) {
+          scoreExplanation = '<br><strong>¿Por qué esta puntuación?</strong><br>';
+          if (data.analysis.ndvi) {
+            scoreExplanation += `• <strong>NDVI ${data.analysis.ndvi.status}</strong> (-${data.analysis.ndvi.penalty} puntos): `;
+            if (data.analysis.ndvi.status === 'CRÍTICO') scoreExplanation += 'Vegetación muy escasa o suelo desnudo.';
+            else if (data.analysis.ndvi.status === 'BUENO') scoreExplanation += 'Vegetación saludable.';
+            else if (data.analysis.ndvi.status === 'EXCELENTE') scoreExplanation += 'Vegetación óptima y densa.';
+            else scoreExplanation += 'Estado de vegetación intermedio.';
+            scoreExplanation += '<br>';
+          }
+          if (data.analysis.subsidence) {
+            scoreExplanation += `• <strong>Subsidencia ${data.analysis.subsidence.status}</strong> (-${data.analysis.subsidence.penalty} puntos): `;
+            if (data.analysis.subsidence.status === 'CRÍTICO') scoreExplanation += 'Terreno inestable amenaza la infraestructura.';
+            else if (data.analysis.subsidence.status === 'ESTABLE') scoreExplanation += 'Terreno completamente estable.';
+            else scoreExplanation += 'Ligera inestabilidad del terreno.';
+            scoreExplanation += '<br>';
+          }
+          if (data.analysis.temperature) {
+            const tempPenalty = data.analysis.temperature.penalty || 0;
+            if (tempPenalty > 0) {
+              scoreExplanation += `• <strong>Temperatura</strong> (-${tempPenalty} puntos): Fuera del rango óptimo para ${cultivo}.<br>`;
+            }
+          }
+          if (data.analysis.humidity) {
+            const humPenalty = data.analysis.humidity.penalty || 0;
+            if (humPenalty > 0) {
+              scoreExplanation += `• <strong>Humedad</strong> (-${humPenalty} puntos): Nivel inadecuado para ${cultivo}.<br>`;
+            }
+          }
+        }
+
+        resultadosLista.innerHTML = `
+          <div style="line-height: 1.6; color: #333;">
+            <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #2E7D32;">🌱 NDVI: ${ndviText}</h4>
+              <p style="margin: 8px 0;"><strong>Tu plantación de ${cultivo} está en estado ${data.analysis?.ndvi?.status?.toLowerCase() || 'desconocido'}.</strong></p>
+              <p style="margin: 8px 0;"><strong>¿Qué significa esto?</strong><br>
+              El NDVI (Índice de Vegetación de Diferencia Normalizada) indica el vigor y salud de la vegetación. Valores altos significan plantas sanas y densas; valores bajos indican estrés, escasez o muerte vegetal.</p>
+              <p style="margin: 8px 0;"><strong>¿De dónde sale este dato?</strong><br>
+              Analizamos tu finca con múltiples imágenes satelitales (Sentinel-2) de los últimos 30 días que miden el "verdor" de las plantas usando bandas del espectro visible e infrarrojo.</p>
+              <div style="margin: 10px 0; font-size: 14px; background: #e8f5e8; padding: 10px; border-radius: 5px;">
+                ${ndviRanges}
+              </div>
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #1976D2;">🌡️ Condiciones climáticas: ${climaText}</h4>
+              <p style="margin: 8px 0;"><strong>Análisis climático para ${cultivo}:</strong></p>
+              ${data.climate ? `
+                <p style="margin: 5px 0;">• Temperatura: ${data.climate.temperature}°C - ${data.climate.temperature >= 18 && data.climate.temperature <= 26 ? 'ÓPTIMA' : 'FUERA DEL RANGO'} para ${cultivo} (ideal: 18-26°C).</p>
+                <p style="margin: 5px 0;">• Humedad: ${data.climate.humidity}% - ${data.climate.humidity >= 60 && data.climate.humidity <= 80 ? 'ADECUADA' : 'INADECUADA'} para ${cultivo} (ideal: 60-80%).</p>
+              ` : '<p>Datos climáticos no disponibles</p>'}
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #795548;">🏔️ Subsidencia: ${subsidenciaText}</h4>
+              <p style="margin: 8px 0;"><strong>¿Qué es subsidencia?</strong><br>
+              La subsidencia es el hundimiento gradual del terreno, que puede afectar la estabilidad de cultivos y estructuras agrícolas.</p>
+              <p style="margin: 8px 0;"><strong>¿Cómo lo medimos?</strong><br>
+              Usamos radares satelitales (Sentinel-1) que detectan cambios milimétricos en la altura del suelo a lo largo del tiempo.</p>
+              <div style="margin: 10px 0; font-size: 14px; background: #e8f5e8; padding: 10px; border-radius: 5px;">
+                <strong>Rangos de subsidencia:</strong><br>
+                • 0-1 mm/año: Estable<br>
+                • 1-3 mm/año: Ligeramente inestable<br>
+                • 3-6 mm/año: Inestable<br>
+                • >6 mm/año: Crítico
+              </div>
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f0f8ff; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #1976D2;">🎯 Recomendaciones específicas:</h4>
+              <ul style="margin: 8px 0; padding-left: 20px; line-height: 1.5;">
+                ${recommendations.map(r => `<li style="margin-bottom: 8px;">${r}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #fff3e0; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #F57C00;">📊 Puntuación general: ${scoreText}</h4>
+              ${scoreExplanation}
+            </div>
+
+            <div style="margin-bottom: 25px; padding: 15px; background: #f3e5f5; border-radius: 8px;">
+              <h4 style="margin: 0 0 10px 0; color: #7B1FA2;">📚 GLOSARIO:</h4>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>NDVI:</strong> Índice de Vegetación que mide el verdor y salud de las plantas (0-1, más alto = más sano).</p>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>Subsidencia:</strong> Hundimiento gradual del terreno, medido en milímetros por año.</p>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>Sentinel-2:</strong> Satélite europeo que provee imágenes multiespectrales para agricultura.</p>
+              <p style="margin: 5px 0; font-size: 14px;"><strong>Sentinel-1:</strong> Satélite radar que detecta cambios en la superficie terrestre.</p>
+            </div>
+          </div>
+        `;
+        
+        resultados.style.display = 'block';
+        resultados.scrollIntoView({behavior:'smooth'});
+        
+        if (!isNaN(parseFloat(lat)) && !isNaN(parseFloat(lon))) {
+          mostrarMapaResultado(parseFloat(lat), parseFloat(lon));
+        }
+      } catch (err) {
+        console.error('Error en el análisis:', err);
+        resultadosLista.innerHTML = '<li>❌ Error al consultar los datos. Intenta de nuevo más tarde.</li>';
+      }
+    });
+
+    // Limpiar formulario
+    clearBtn.addEventListener('click', function() {
+      form.reset();
+      resultados.style.display = 'none';
+      resultadosLista.innerHTML = '';
+    });
+  </script>
+</body>
+</html>
