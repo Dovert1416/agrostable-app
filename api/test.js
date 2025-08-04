@@ -1,6 +1,3 @@
-// Importar bibliotecas para APIs reales
-const axios = require('axios');
-
 export default async function handler(req, res) {
   // Configurar CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -30,15 +27,16 @@ export default async function handler(req, res) {
 
     // 1. CONSULTAR CLIMA REAL (OpenWeatherMap)
     try {
-      const weatherResponse = await axios.get(
+      const weatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`
       );
       
-      if (weatherResponse.data) {
+      if (weatherResponse.ok) {
+        const weatherData = await weatherResponse.json();
         climateData = {
-          temperature: Math.round(weatherResponse.data.main?.temp || 0),
-          humidity: Math.round(weatherResponse.data.main?.humidity || 0),
-          description: weatherResponse.data.weather?.[0]?.description || 'N/A'
+          temperature: Math.round(weatherData.main?.temp || 0),
+          humidity: Math.round(weatherData.main?.humidity || 0),
+          description: weatherData.weather?.[0]?.description || 'N/A'
         };
       }
     } catch (error) {
