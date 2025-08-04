@@ -115,23 +115,27 @@ function analyzeCropConditions(ndvi, subsidence, climate, cropType, ranges) {
   let recommendations = [];
   let details = {};
 
-  // ANÁLISIS NDVI
+  // ANÁLISIS NDVI CORREGIDO
   if (ndvi !== null) {
     let ndviStatus = '';
     let ndviPenalty = 0;
     
-    if (ndvi >= ranges.ndvi.excellent[0]) {
+    // Rangos corregidos según la tabla mostrada
+    if (ndvi >= 0.80) {
       ndviStatus = 'EXCELENTE';
       ndviPenalty = 0;
-    } else if (ndvi >= ranges.ndvi.good[0]) {
+    } else if (ndvi >= 0.60) {
       ndviStatus = 'BUENO';
       ndviPenalty = 5;
-    } else if (ndvi >= ranges.ndvi.regular[0]) {
+    } else if (ndvi >= 0.40) {
       ndviStatus = 'REGULAR';
       ndviPenalty = 15;
+    } else if (ndvi >= 0.20) {
+      ndviStatus = 'MALO';
+      ndviPenalty = 25;
     } else {
       ndviStatus = 'CRÍTICO';
-      ndviPenalty = 30;
+      ndviPenalty = 35;
     }
     
     score -= ndviPenalty;
@@ -220,22 +224,19 @@ function analyzeCropConditions(ndvi, subsidence, climate, cropType, ranges) {
     details.humidity = { value: climate.humidity, penalty: humidityPenalty };
   }
 
-  // RECOMENDACIÓN GENERAL
+  // RECOMENDACIÓN GENERAL SIMPLIFICADA (SIN DUPLICAR PUNTUACIÓN)
   score = Math.max(5, Math.min(100, score)); // Entre 5 y 100
   
-  if (score >= 80) {
-    recommendations.push(`📈 PUNTUACIÓN EXCELENTE (${score}/100): Tu cultivo de ${cropType} está en condiciones óptimas. Mantener prácticas actuales.`);
-  } else if (score >= 60) {
-    recommendations.push(`📊 PUNTUACIÓN BUENA (${score}/100): Tu cultivo de ${cropType} está bien. Considerar mejoras menores según recomendaciones.`);
-  } else if (score >= 40) {
-    recommendations.push(`⚠️ PUNTUACIÓN REGULAR (${score}/100): Tu cultivo de ${cropType} necesita atención. Implementar recomendaciones urgentes.`);
-  } else {
-    recommendations.push(`🚨 PUNTUACIÓN CRÍTICA (${score}/100): Tu cultivo de ${cropType} está en riesgo. Actuar inmediatamente según todas las recomendaciones.`);
-  }
+  let scoreLevel = '';
+  if (score >= 80) scoreLevel = 'EXCELENTE';
+  else if (score >= 60) scoreLevel = 'BUENO';
+  else if (score >= 40) scoreLevel = 'REGULAR';
+  else scoreLevel = 'CRÍTICO';
 
   return {
     score: score,
-    recommendations: recommendations.slice(0, 6), // Máximo 6 recomendaciones
+    scoreLevel: scoreLevel,
+    recommendations: recommendations.slice(0, 5), // Máximo 5 recomendaciones SIN duplicar score
     details: details
   };
 }
