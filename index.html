@@ -575,12 +575,12 @@
             <option value="Frijol">Frijol</option>
             <option value="Cebolla">Cebolla</option>
             <option value="Lechuga">Lechuga</option>
-            <option value="Plátano">Plátano</option>
-            <option value="Caña de azúcar">Caña de azúcar</option>
+            <option value="Banano">Banano</option>
+            <option value="Caña de Azúcar">Caña de Azúcar</option>
             <option value="Cacao">Cacao</option>
-            <option value="Yuca">Yuca</option>
-            <option value="Flores">Flores</option>
+            <option value="Soja">Soja</option>
             <option value="Trigo">Trigo</option>
+            <option value="Girasol">Girasol</option>
             <option value="Aguacate">Aguacate</option>
           </select>
         </div>
@@ -601,6 +601,73 @@
     const resultados = document.getElementById('resultados');
     const resultadosLista = document.getElementById('resultados-lista');
     const clearBtn = document.getElementById('clear-btn');
+
+    // RANGOS DINÁMICOS POR CULTIVO (NO HARDCODEADOS)
+    function getNDVIRanges(cropType) {
+      const ranges = {
+        'Arroz': { excellent: 0.80, good: 0.60, regular: 0.40, bad: 0.20 },
+        'Café': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+        'Tomate': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+        'Maíz': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+        'Papa': { excellent: 0.60, good: 0.45, regular: 0.30, bad: 0.20 },
+        'Frijol': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+        'Cebolla': { excellent: 0.50, good: 0.35, regular: 0.25, bad: 0.15 },
+        'Lechuga': { excellent: 0.65, good: 0.50, regular: 0.35, bad: 0.20 },
+        'Aguacate': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+        'Banano': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+        'Caña de Azúcar': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+        'Soja': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+        'Trigo': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+        'Girasol': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+        'Cacao': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 }
+      };
+      return ranges[cropType] || { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 };
+    }
+
+    function getTempRanges(cropType) {
+      const ranges = {
+        'Arroz': { min: 20, max: 35, optimal_min: 25, optimal_max: 30 },
+        'Café': { min: 15, max: 28, optimal_min: 18, optimal_max: 24 },
+        'Tomate': { min: 15, max: 30, optimal_min: 18, optimal_max: 27 },
+        'Maíz': { min: 15, max: 35, optimal_min: 20, optimal_max: 30 },
+        'Papa': { min: 10, max: 25, optimal_min: 15, optimal_max: 20 },
+        'Frijol': { min: 18, max: 30, optimal_min: 20, optimal_max: 27 },
+        'Cebolla': { min: 12, max: 30, optimal_min: 15, optimal_max: 25 },
+        'Lechuga': { min: 10, max: 24, optimal_min: 15, optimal_max: 20 },
+        'Aguacate': { min: 18, max: 28, optimal_min: 20, optimal_max: 25 },
+        'Banano': { min: 20, max: 35, optimal_min: 25, optimal_max: 30 },
+        'Caña de Azúcar': { min: 20, max: 35, optimal_min: 25, optimal_max: 32 },
+        'Soja': { min: 18, max: 32, optimal_min: 22, optimal_max: 28 },
+        'Trigo': { min: 12, max: 25, optimal_min: 15, optimal_max: 22 },
+        'Girasol': { min: 18, max: 30, optimal_min: 20, optimal_max: 27 },
+        'Cacao': { min: 20, max: 32, optimal_min: 24, optimal_max: 28 }
+      };
+      return ranges[cropType] || { min: 15, max: 30, optimal_min: 18, optimal_max: 25 };
+    }
+
+    function getNDVIStatus(ndvi, cropType) {
+      const ranges = getNDVIRanges(cropType);
+      if (ndvi >= ranges.excellent) return 'EXCELENTE';
+      if (ndvi >= ranges.good) return 'BUENO';
+      if (ndvi >= ranges.regular) return 'REGULAR';
+      if (ndvi >= ranges.bad) return 'MALO';
+      return 'CRÍTICO';
+    }
+
+    function getTempStatus(temp, ranges) {
+      if (temp < ranges.min) return 'BAJA';
+      if (temp > ranges.max) return 'ALTA';
+      if (temp >= ranges.optimal_min && temp <= ranges.optimal_max) return 'ÓPTIMA';
+      return 'ACEPTABLE';
+    }
+
+    function getSubsidenceStatus(subsidence) {
+      const abs = Math.abs(subsidence);
+      if (abs <= 1) return 'ESTABLE';
+      if (abs <= 3) return 'LIGERAMENTE INESTABLE';
+      if (abs <= 6) return 'MODERADAMENTE INESTABLE';
+      return 'CRÍTICO';
+    }
 
     // LEAFLET MAPA DE RESULTADO
     let resultMap = null;
@@ -625,7 +692,7 @@
       resultMarker = L.marker([lat, lng]).addTo(resultMap);
     }
 
-    // SUBMIT DEL FORMULARIO CON API CORREGIDA
+    // SUBMIT DEL FORMULARIO CON RANGOS DINÁMICOS
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       try {
@@ -642,7 +709,7 @@
         resultadosLista.innerHTML = '<li>🔄 Analizando datos satelitales y climáticos...</li>';
         resultados.style.display = 'block';
         
-        // LLAMADA A LA API CORREGIDA
+        // LLAMADA A LA API
         const response = await fetch('/api/test', {
           method: 'POST',
           headers: {
@@ -661,144 +728,82 @@
 
         const data = await response.json();
         
-        // Mostrar resultados de la API mejorada
-        let ndviText = 'N/A - Sin datos';
-        let climaText = 'N/A';
-        let subsidenciaText = 'Sin datos';
-        let scoreText = 'N/A';
+        // OBTENER RANGOS DINÁMICOS PARA ESTE CULTIVO
+        const ndviRanges = getNDVIRanges(cultivo);
+        const tempRanges = getTempRanges(cultivo);
         
-        // NDVI con estado inteligente
-        if (data.ndvi !== null && data.ndvi !== undefined) {
-          const ndviPercent = Math.round(data.ndvi * 100);
-          let estado = data.analysis?.ndvi?.status || 'REGULAR';
-          ndviText = `${data.ndvi.toFixed(2)} (${ndviPercent}%) - ${estado}`;
-        }
+        // CALCULAR ESTADOS DINÁMICAMENTE
+        const ndviStatus = getNDVIStatus(data.ndvi, cultivo);
+        const tempStatus = getTempStatus(data.climate.temperature, tempRanges);
+        const subsidenceStatus = getSubsidenceStatus(data.subsidence);
         
-        // Clima mejorado
-        if (data.climate) {
-          const temp = data.climate.temperature || 'N/A';
-          const humidity = data.climate.humidity || 'N/A';
-          const desc = data.climate.description || '';
-          climaText = `${temp}°C, Humedad: ${humidity}% ${desc ? '(' + desc + ')' : ''}`;
-        }
-        
-        // Subsidencia con análisis
-        if (data.subsidence !== null && data.subsidence !== undefined) {
-          let subsidenciaEstado = data.analysis?.subsidence?.status || 'SIN ANÁLISIS';
-          subsidenciaText = `${data.subsidence} mm/año - ${subsidenciaEstado}`;
-        }
-        
-        // Puntuación final
-        if (data.score !== null && data.score !== undefined) {
-          let scoreLevel = '';
-          if (data.score >= 80) scoreLevel = 'EXCELENTE';
-          else if (data.score >= 60) scoreLevel = 'BUENO';
-          else if (data.score >= 40) scoreLevel = 'REGULAR';
-          else scoreLevel = 'CRÍTICO';
-          
-          scoreText = `${Math.round(data.score)}/100 (${scoreLevel})`;
-        }
-        
-        const recommendations = data.recommendations || ['Mantener monitoreo regular', 'Seguir buenas prácticas agrícolas'];
-        
-        // Generar rangos NDVI específicos por cultivo
-        let ndviRanges = '';
-        if (cultivo === 'Café') {
-          ndviRanges = `
-            <strong>Rangos NDVI para Café:</strong><br>
-            • 0.80 - 1.00: Excelente (vegetación densa)<br>
-            • 0.60 - 0.79: Bueno (vegetación saludable)<br>
-            • 0.40 - 0.59: Regular (estrés moderado)<br>
-            • 0.20 - 0.39: Malo (estrés severo)<br>
-            • 0.00 - 0.19: Crítico (suelo desnudo o vegetación muerta)
-          `;
-        } else if (cultivo === 'Tomate') {
-          ndviRanges = `
-            <strong>Rangos NDVI para Tomate:</strong><br>
-            • 0.75 - 1.00: Excelente (vegetación densa)<br>
-            • 0.55 - 0.74: Bueno (vegetación saludable)<br>
-            • 0.35 - 0.54: Regular (estrés moderado)<br>
-            • 0.15 - 0.34: Malo (estrés severo)<br>
-            • 0.00 - 0.14: Crítico (suelo desnudo o vegetación muerta)
-          `;
-        } else {
-          ndviRanges = `
-            <strong>Rangos NDVI para ${cultivo}:</strong><br>
-            • 0.80 - 1.00: Excelente<br>
-            • 0.60 - 0.79: Bueno<br>
-            • 0.40 - 0.59: Regular<br>
-            • 0.20 - 0.39: Malo<br>
-            • 0.00 - 0.19: Crítico
-          `;
-        }
+        const ndviPercent = Math.round(data.ndvi * 100);
+        const climaText = `${data.climate.temperature}°C, Humedad: ${data.climate.humidity}% (${data.climate.description})`;
 
-        // Explicación de puntuación detallada
+        // GENERAR RANGOS NDVI DINÁMICOS
+        const ndviRangesText = `
+          <strong>Rangos NDVI para ${cultivo}:</strong><br>
+          • ${ndviRanges.excellent.toFixed(2)} - 1.00: Excelente<br>
+          • ${ndviRanges.good.toFixed(2)} - ${(ndviRanges.excellent - 0.01).toFixed(2)}: Bueno<br>
+          • ${ndviRanges.regular.toFixed(2)} - ${(ndviRanges.good - 0.01).toFixed(2)}: Regular<br>
+          • ${ndviRanges.bad.toFixed(2)} - ${(ndviRanges.regular - 0.01).toFixed(2)}: Malo<br>
+          • 0.00 - ${(ndviRanges.bad - 0.01).toFixed(2)}: Crítico
+        `;
+
+        // ANÁLISIS CLIMÁTICO DINÁMICO
+        const climateAnalysis = `
+          • Temperatura: ${data.climate.temperature}°C - ${tempStatus} para ${cultivo} (rango seguro: ${tempRanges.min}-${tempRanges.max}°C, óptimo: ${tempRanges.optimal_min}-${tempRanges.optimal_max}°C).<br>
+          • Humedad: ${data.climate.humidity}% - ${data.climate.humidity >= 60 && data.climate.humidity <= 80 ? 'ADECUADA' : 'REVISAR'} para ${cultivo} (ideal: 60-80%).
+        `;
+
+        // EXPLICACIÓN DE PUNTUACIÓN DINÁMICA
         let scoreExplanation = '';
         if (data.analysis) {
-          scoreExplanation = '<br><strong>¿Por qué esta puntuación?</strong><br>';
+          scoreExplanation = '<strong>¿Por qué esta puntuación?</strong><br>';
           if (data.analysis.ndvi) {
             scoreExplanation += `• <strong>NDVI ${data.analysis.ndvi.status}</strong> (-${data.analysis.ndvi.penalty} puntos): `;
-            if (data.analysis.ndvi.status === 'CRÍTICO') scoreExplanation += 'Vegetación muy escasa o suelo desnudo.';
-            else if (data.analysis.ndvi.status === 'BUENO') scoreExplanation += 'Vegetación saludable.';
-            else if (data.analysis.ndvi.status === 'EXCELENTE') scoreExplanation += 'Vegetación óptima y densa.';
-            else scoreExplanation += 'Estado de vegetación intermedio.';
-            scoreExplanation += '<br>';
+            if (data.analysis.ndvi.status === 'CRÍTICO') scoreExplanation += 'Vegetación muy escasa o suelo desnudo.<br>';
+            else if (data.analysis.ndvi.status === 'BUENO') scoreExplanation += 'Vegetación saludable.<br>';
+            else if (data.analysis.ndvi.status === 'EXCELENTE') scoreExplanation += 'Vegetación óptima y densa.<br>';
+            else scoreExplanation += 'Estado de vegetación intermedio.<br>';
           }
           if (data.analysis.subsidence) {
             scoreExplanation += `• <strong>Subsidencia ${data.analysis.subsidence.status}</strong> (-${data.analysis.subsidence.penalty} puntos): `;
-            if (data.analysis.subsidence.status === 'CRÍTICO') scoreExplanation += 'Terreno inestable amenaza la infraestructura.';
-            else if (data.analysis.subsidence.status === 'ESTABLE') scoreExplanation += 'Terreno completamente estable.';
-            else scoreExplanation += 'Ligera inestabilidad del terreno.';
-            scoreExplanation += '<br>';
-          }
-          if (data.analysis.temperature) {
-            const tempPenalty = data.analysis.temperature.penalty || 0;
-            if (tempPenalty > 0) {
-              scoreExplanation += `• <strong>Temperatura</strong> (-${tempPenalty} puntos): Fuera del rango óptimo para ${cultivo}.<br>`;
-            }
-          }
-          if (data.analysis.humidity) {
-            const humPenalty = data.analysis.humidity.penalty || 0;
-            if (humPenalty > 0) {
-              scoreExplanation += `• <strong>Humedad</strong> (-${humPenalty} puntos): Nivel inadecuado para ${cultivo}.<br>`;
-            }
+            if (data.analysis.subsidence.status === 'CRÍTICO') scoreExplanation += 'Terreno altamente inestable.<br>';
+            else if (data.analysis.subsidence.status === 'ESTABLE') scoreExplanation += 'Terreno completamente estable.<br>';
+            else scoreExplanation += 'Ligera inestabilidad del terreno.<br>';
           }
         }
+
+        const recommendations = data.recommendations || ['Mantener monitoreo regular'];
 
         resultadosLista.innerHTML = `
           <div style="line-height: 1.6; color: #333;">
             <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-              <h4 style="margin: 0 0 10px 0; color: #2E7D32;">🌱 NDVI: ${ndviText}</h4>
-              <p style="margin: 8px 0;"><strong>Tu plantación de ${cultivo} está en estado ${data.analysis?.ndvi?.status?.toLowerCase() || 'desconocido'}.</strong></p>
-              <p style="margin: 8px 0;"><strong>¿Qué significa esto?</strong><br>
-              El NDVI (Índice de Vegetación de Diferencia Normalizada) indica el vigor y salud de la vegetación. Valores altos significan plantas sanas y densas; valores bajos indican estrés, escasez o muerte vegetal.</p>
-              <p style="margin: 8px 0;"><strong>¿De dónde sale este dato?</strong><br>
-              Analizamos tu finca con múltiples imágenes satelitales (Sentinel-2) de los últimos 30 días que miden el "verdor" de las plantas usando bandas del espectro visible e infrarrojo.</p>
+              <h4 style="margin: 0 0 10px 0; color: #2E7D32;">🌱 NDVI: ${data.ndvi.toFixed(2)} (${ndviPercent}%) - ${ndviStatus}</h4>
+              <p style="margin: 8px 0;"><strong>Tu plantación de ${cultivo} está en estado ${ndviStatus.toLowerCase()}.</strong></p>
+              <p style="margin: 8px 0;"><strong>¿Qué significa esto?</strong> El NDVI (Índice de Vegetación de Diferencia Normalizada) indica el vigor y salud de la vegetación. Valores altos significan plantas sanas y densas; valores bajos indican estrés, escasez o muerte vegetal.</p>
+              <p style="margin: 8px 0;"><strong>¿De dónde sale este dato?</strong> Analizamos tu finca con múltiples imágenes satelitales (Sentinel-2) de los últimos 30 días que miden el "verdor" de las plantas usando bandas del espectro visible e infrarrojo.</p>
               <div style="margin: 10px 0; font-size: 14px; background: #e8f5e8; padding: 10px; border-radius: 5px;">
-                ${ndviRanges}
+                ${ndviRangesText}
               </div>
             </div>
 
             <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
               <h4 style="margin: 0 0 10px 0; color: #1976D2;">🌡️ Condiciones climáticas: ${climaText}</h4>
               <p style="margin: 8px 0;"><strong>Análisis climático para ${cultivo}:</strong></p>
-              ${data.climate ? `
-                <p style="margin: 5px 0;">• Temperatura: ${data.climate.temperature}°C - ${data.climate.temperature >= 18 && data.climate.temperature <= 26 ? 'ÓPTIMA' : 'FUERA DEL RANGO'} para ${cultivo} (ideal: 18-26°C).</p>
-                <p style="margin: 5px 0;">• Humedad: ${data.climate.humidity}% - ${data.climate.humidity >= 60 && data.climate.humidity <= 80 ? 'ADECUADA' : 'INADECUADA'} para ${cultivo} (ideal: 60-80%).</p>
-              ` : '<p>Datos climáticos no disponibles</p>'}
+              <div style="margin: 5px 0;">${climateAnalysis}</div>
             </div>
 
             <div style="margin-bottom: 25px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
-              <h4 style="margin: 0 0 10px 0; color: #795548;">🏔️ Subsidencia: ${subsidenciaText}</h4>
-              <p style="margin: 8px 0;"><strong>¿Qué es subsidencia?</strong><br>
-              La subsidencia es el hundimiento gradual del terreno, que puede afectar la estabilidad de cultivos y estructuras agrícolas.</p>
-              <p style="margin: 8px 0;"><strong>¿Cómo lo medimos?</strong><br>
-              Usamos radares satelitales (Sentinel-1) que detectan cambios milimétricos en la altura del suelo a lo largo del tiempo.</p>
+              <h4 style="margin: 0 0 10px 0; color: #795548;">🏔️ Subsidencia: ${data.subsidence} mm/año - ${subsidenceStatus}</h4>
+              <p style="margin: 8px 0;"><strong>¿Qué es subsidencia?</strong> La subsidencia es el hundimiento gradual del terreno, que puede afectar la estabilidad de cultivos y estructuras agrícolas.</p>
+              <p style="margin: 8px 0;"><strong>¿Cómo lo medimos?</strong> Usamos radares satelitales (Sentinel-1) que detectan cambios milimétricos en la altura del suelo a lo largo del tiempo.</p>
               <div style="margin: 10px 0; font-size: 14px; background: #e8f5e8; padding: 10px; border-radius: 5px;">
                 <strong>Rangos de subsidencia:</strong><br>
                 • 0-1 mm/año: Estable<br>
                 • 1-3 mm/año: Ligeramente inestable<br>
-                • 3-6 mm/año: Inestable<br>
+                • 3-6 mm/año: Moderadamente inestable<br>
                 • >6 mm/año: Crítico
               </div>
             </div>
@@ -811,7 +816,7 @@
             </div>
 
             <div style="margin-bottom: 25px; padding: 15px; background: #fff3e0; border-radius: 8px;">
-              <h4 style="margin: 0 0 10px 0; color: #F57C00;">📊 Puntuación general: ${scoreText}</h4>
+              <h4 style="margin: 0 0 10px 0; color: #F57C00;">📊 Puntuación general: ${Math.round(data.score)}/100 (${data.scoreLevel || 'EVALUANDO'})</h4>
               ${scoreExplanation}
             </div>
 
@@ -842,6 +847,8 @@
       form.reset();
       resultados.style.display = 'none';
       resultadosLista.innerHTML = '';
+      const mapDiv = document.getElementById('result-map');
+      if (mapDiv) mapDiv.style.display = 'none';
     });
   </script>
 </body>
