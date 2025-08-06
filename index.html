@@ -602,71 +602,74 @@
     const resultadosLista = document.getElementById('resultados-lista');
     const clearBtn = document.getElementById('clear-btn');
 
-    // RANGOS DINÁMICOS POR CULTIVO (NO HARDCODEADOS)
-    function getNDVIRanges(cropType) {
-      const ranges = {
-        'Arroz': { excellent: 0.80, good: 0.60, regular: 0.40, bad: 0.20 },
-        'Café': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
-        'Tomate': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
-        'Maíz': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
-        'Papa': { excellent: 0.60, good: 0.45, regular: 0.30, bad: 0.20 },
-        'Frijol': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
-        'Cebolla': { excellent: 0.50, good: 0.35, regular: 0.25, bad: 0.15 },
-        'Lechuga': { excellent: 0.65, good: 0.50, regular: 0.35, bad: 0.20 },
-        'Aguacate': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
-        'Banano': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
-        'Caña de Azúcar': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
-        'Soja': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
-        'Trigo': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
-        'Girasol': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
-        'Cacao': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 }
+    // RANGOS POR CULTIVO PARA ANÁLISIS DINÁMICO
+    function getCropRanges(cropType) {
+      const allRanges = {
+        'Arroz': { 
+          ndvi: { excellent: 0.80, good: 0.60, regular: 0.40, bad: 0.20 },
+          temp: { min: 20, max: 35, optimal_min: 25, optimal_max: 30 }
+        },
+        'Café': { 
+          ndvi: { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+          temp: { min: 15, max: 28, optimal_min: 18, optimal_max: 24 }
+        },
+        'Tomate': { 
+          ndvi: { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+          temp: { min: 15, max: 30, optimal_min: 18, optimal_max: 27 }
+        },
+        'Maíz': { 
+          ndvi: { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+          temp: { min: 15, max: 35, optimal_min: 20, optimal_max: 30 }
+        },
+        'Papa': { 
+          ndvi: { excellent: 0.60, good: 0.45, regular: 0.30, bad: 0.20 },
+          temp: { min: 10, max: 25, optimal_min: 15, optimal_max: 20 }
+        },
+        'Frijol': { 
+          ndvi: { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+          temp: { min: 18, max: 30, optimal_min: 20, optimal_max: 27 }
+        },
+        'Cebolla': { 
+          ndvi: { excellent: 0.50, good: 0.35, regular: 0.25, bad: 0.15 },
+          temp: { min: 12, max: 30, optimal_min: 15, optimal_max: 25 }
+        },
+        'Lechuga': { 
+          ndvi: { excellent: 0.65, good: 0.50, regular: 0.35, bad: 0.20 },
+          temp: { min: 10, max: 24, optimal_min: 15, optimal_max: 20 }
+        },
+        'Banano': { 
+          ndvi: { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+          temp: { min: 20, max: 35, optimal_min: 25, optimal_max: 30 }
+        },
+        'Caña de Azúcar': { 
+          ndvi: { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+          temp: { min: 20, max: 35, optimal_min: 25, optimal_max: 32 }
+        },
+        'Cacao': { 
+          ndvi: { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+          temp: { min: 20, max: 32, optimal_min: 24, optimal_max: 28 }
+        },
+        'Soja': { 
+          ndvi: { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+          temp: { min: 18, max: 32, optimal_min: 22, optimal_max: 28 }
+        },
+        'Trigo': { 
+          ndvi: { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+          temp: { min: 12, max: 25, optimal_min: 15, optimal_max: 22 }
+        },
+        'Girasol': { 
+          ndvi: { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+          temp: { min: 18, max: 30, optimal_min: 20, optimal_max: 27 }
+        },
+        'Aguacate': { 
+          ndvi: { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+          temp: { min: 18, max: 28, optimal_min: 20, optimal_max: 25 }
+        }
       };
-      return ranges[cropType] || { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 };
-    }
-
-    function getTempRanges(cropType) {
-      const ranges = {
-        'Arroz': { min: 20, max: 35, optimal_min: 25, optimal_max: 30 },
-        'Café': { min: 15, max: 28, optimal_min: 18, optimal_max: 24 },
-        'Tomate': { min: 15, max: 30, optimal_min: 18, optimal_max: 27 },
-        'Maíz': { min: 15, max: 35, optimal_min: 20, optimal_max: 30 },
-        'Papa': { min: 10, max: 25, optimal_min: 15, optimal_max: 20 },
-        'Frijol': { min: 18, max: 30, optimal_min: 20, optimal_max: 27 },
-        'Cebolla': { min: 12, max: 30, optimal_min: 15, optimal_max: 25 },
-        'Lechuga': { min: 10, max: 24, optimal_min: 15, optimal_max: 20 },
-        'Aguacate': { min: 18, max: 28, optimal_min: 20, optimal_max: 25 },
-        'Banano': { min: 20, max: 35, optimal_min: 25, optimal_max: 30 },
-        'Caña de Azúcar': { min: 20, max: 35, optimal_min: 25, optimal_max: 32 },
-        'Soja': { min: 18, max: 32, optimal_min: 22, optimal_max: 28 },
-        'Trigo': { min: 12, max: 25, optimal_min: 15, optimal_max: 22 },
-        'Girasol': { min: 18, max: 30, optimal_min: 20, optimal_max: 27 },
-        'Cacao': { min: 20, max: 32, optimal_min: 24, optimal_max: 28 }
+      return allRanges[cropType] || { 
+        ndvi: { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+        temp: { min: 15, max: 30, optimal_min: 18, optimal_max: 25 }
       };
-      return ranges[cropType] || { min: 15, max: 30, optimal_min: 18, optimal_max: 25 };
-    }
-
-    function getNDVIStatus(ndvi, cropType) {
-      const ranges = getNDVIRanges(cropType);
-      if (ndvi >= ranges.excellent) return 'EXCELENTE';
-      if (ndvi >= ranges.good) return 'BUENO';
-      if (ndvi >= ranges.regular) return 'REGULAR';
-      if (ndvi >= ranges.bad) return 'MALO';
-      return 'CRÍTICO';
-    }
-
-    function getTempStatus(temp, ranges) {
-      if (temp < ranges.min) return 'BAJA';
-      if (temp > ranges.max) return 'ALTA';
-      if (temp >= ranges.optimal_min && temp <= ranges.optimal_max) return 'ÓPTIMA';
-      return 'ACEPTABLE';
-    }
-
-    function getSubsidenceStatus(subsidence) {
-      const abs = Math.abs(subsidence);
-      if (abs <= 1) return 'ESTABLE';
-      if (abs <= 3) return 'LIGERAMENTE INESTABLE';
-      if (abs <= 6) return 'MODERADAMENTE INESTABLE';
-      return 'CRÍTICO';
     }
 
     // LEAFLET MAPA DE RESULTADO
@@ -692,7 +695,7 @@
       resultMarker = L.marker([lat, lng]).addTo(resultMap);
     }
 
-    // SUBMIT DEL FORMULARIO CON RANGOS DINÁMICOS
+    // SUBMIT DEL FORMULARIO CON RANGOS DINÁMICOS (CORRIGIENDO INCONSISTENCIAS)
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       try {
@@ -728,19 +731,35 @@
 
         const data = await response.json();
         
-        // OBTENER RANGOS DINÁMICOS PARA ESTE CULTIVO
-        const ndviRanges = getNDVIRanges(cultivo);
-        const tempRanges = getTempRanges(cultivo);
+        // OBTENER RANGOS ESPECÍFICOS PARA ESTE CULTIVO
+        const cropRanges = getCropRanges(cultivo);
+        const ndviRanges = cropRanges.ndvi;
+        const tempRanges = cropRanges.temp;
         
-        // CALCULAR ESTADOS DINÁMICAMENTE
-        const ndviStatus = getNDVIStatus(data.ndvi, cultivo);
-        const tempStatus = getTempStatus(data.climate.temperature, tempRanges);
-        const subsidenceStatus = getSubsidenceStatus(data.subsidence);
+        // CALCULAR STATUS DINÁMICAMENTE (SIN HARDCODEAR)
+        let ndviStatus = 'CRÍTICO';
+        if (data.ndvi >= ndviRanges.excellent) ndviStatus = 'EXCELENTE';
+        else if (data.ndvi >= ndviRanges.good) ndviStatus = 'BUENO';
+        else if (data.ndvi >= ndviRanges.regular) ndviStatus = 'REGULAR';
+        else if (data.ndvi >= ndviRanges.bad) ndviStatus = 'MALO';
         
+        let tempStatus = 'FUERA DEL RANGO';
+        if (data.climate.temperature >= tempRanges.optimal_min && data.climate.temperature <= tempRanges.optimal_max) {
+          tempStatus = 'ÓPTIMA';
+        } else if (data.climate.temperature >= tempRanges.min && data.climate.temperature <= tempRanges.max) {
+          tempStatus = 'ACEPTABLE';
+        }
+        
+        let subsidenceStatus = 'CRÍTICO';
+        const absSubsidence = Math.abs(data.subsidence);
+        if (absSubsidence <= 1) subsidenceStatus = 'ESTABLE';
+        else if (absSubsidence <= 3) subsidenceStatus = 'LIGERAMENTE INESTABLE';
+        else if (absSubsidence <= 6) subsidenceStatus = 'MODERADAMENTE INESTABLE';
+
         const ndviPercent = Math.round(data.ndvi * 100);
         const climaText = `${data.climate.temperature}°C, Humedad: ${data.climate.humidity}% (${data.climate.description})`;
 
-        // GENERAR RANGOS NDVI DINÁMICOS
+        // RANGOS NDVI DINÁMICOS SEGÚN EL CULTIVO
         const ndviRangesText = `
           <strong>Rangos NDVI para ${cultivo}:</strong><br>
           • ${ndviRanges.excellent.toFixed(2)} - 1.00: Excelente<br>
@@ -750,30 +769,11 @@
           • 0.00 - ${(ndviRanges.bad - 0.01).toFixed(2)}: Crítico
         `;
 
-        // ANÁLISIS CLIMÁTICO DINÁMICO
+        // ANÁLISIS CLIMÁTICO CON RANGOS ESPECÍFICOS DEL CULTIVO
         const climateAnalysis = `
           • Temperatura: ${data.climate.temperature}°C - ${tempStatus} para ${cultivo} (rango seguro: ${tempRanges.min}-${tempRanges.max}°C, óptimo: ${tempRanges.optimal_min}-${tempRanges.optimal_max}°C).<br>
           • Humedad: ${data.climate.humidity}% - ${data.climate.humidity >= 60 && data.climate.humidity <= 80 ? 'ADECUADA' : 'REVISAR'} para ${cultivo} (ideal: 60-80%).
         `;
-
-        // EXPLICACIÓN DE PUNTUACIÓN DINÁMICA
-        let scoreExplanation = '';
-        if (data.analysis) {
-          scoreExplanation = '<strong>¿Por qué esta puntuación?</strong><br>';
-          if (data.analysis.ndvi) {
-            scoreExplanation += `• <strong>NDVI ${data.analysis.ndvi.status}</strong> (-${data.analysis.ndvi.penalty} puntos): `;
-            if (data.analysis.ndvi.status === 'CRÍTICO') scoreExplanation += 'Vegetación muy escasa o suelo desnudo.<br>';
-            else if (data.analysis.ndvi.status === 'BUENO') scoreExplanation += 'Vegetación saludable.<br>';
-            else if (data.analysis.ndvi.status === 'EXCELENTE') scoreExplanation += 'Vegetación óptima y densa.<br>';
-            else scoreExplanation += 'Estado de vegetación intermedio.<br>';
-          }
-          if (data.analysis.subsidence) {
-            scoreExplanation += `• <strong>Subsidencia ${data.analysis.subsidence.status}</strong> (-${data.analysis.subsidence.penalty} puntos): `;
-            if (data.analysis.subsidence.status === 'CRÍTICO') scoreExplanation += 'Terreno altamente inestable.<br>';
-            else if (data.analysis.subsidence.status === 'ESTABLE') scoreExplanation += 'Terreno completamente estable.<br>';
-            else scoreExplanation += 'Ligera inestabilidad del terreno.<br>';
-          }
-        }
 
         const recommendations = data.recommendations || ['Mantener monitoreo regular'];
 
@@ -817,7 +817,11 @@
 
             <div style="margin-bottom: 25px; padding: 15px; background: #fff3e0; border-radius: 8px;">
               <h4 style="margin: 0 0 10px 0; color: #F57C00;">📊 Puntuación general: ${Math.round(data.score)}/100 (${data.scoreLevel || 'EVALUANDO'})</h4>
-              ${scoreExplanation}
+              ${data.analysis ? `
+                <strong>¿Por qué esta puntuación?</strong><br>
+                ${data.analysis.ndvi ? `• <strong>NDVI ${data.analysis.ndvi.status}</strong> (-${data.analysis.ndvi.penalty} puntos): ${data.analysis.ndvi.status === 'BUENO' ? 'Vegetación saludable.' : 'Estado de vegetación variable.'}<br>` : ''}
+                ${data.analysis.subsidence ? `• <strong>Subsidencia ${data.analysis.subsidence.status}</strong> (-${data.analysis.subsidence.penalty} puntos): ${data.analysis.subsidence.status === 'ESTABLE' ? 'Terreno completamente estable.' : 'Inestabilidad del terreno.'}<br>` : ''}
+              ` : ''}
             </div>
 
             <div style="margin-bottom: 25px; padding: 15px; background: #f3e5f5; border-radius: 8px;">
