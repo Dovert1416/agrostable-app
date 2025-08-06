@@ -44,7 +44,7 @@ export default async function handler(req, res) {
     // 3. SUBSIDENCIA CONSISTENTE (siempre igual para mismas coordenadas)
     const subsidenceValue = calculateConsistentSubsidence(latitude, longitude)
 
-    // 4. ANÁLISIS COMPLETO CON DATOS CONSISTENTES
+    // 4. ANÁLISIS COMPLETO CON RANGOS CORRECTOS DE SUPABASE
     const analysis = analyzeCropConditions(ndviValue, subsidenceValue, climateData, cropType)
 
     // 5. RESPUESTA COMPLETA
@@ -82,12 +82,12 @@ function calculateConsistentNDVI(lat, lon, cropType) {
     'Frijol': 0.65,
     'Cebolla': 0.45,
     'Lechuga': 0.55,
-    'Plátano': 0.80,
-    'Caña de azúcar': 0.75,
+    'Banano': 0.80,
+    'Caña de Azúcar': 0.75,
     'Cacao': 0.70,
-    'Yuca': 0.60,
-    'Flores': 0.55,
+    'Soja': 0.60,
     'Trigo': 0.55,
+    'Girasol': 0.65,
     'Aguacate': 0.75
   }
   
@@ -138,20 +138,30 @@ function analyzeCropConditions(ndvi, subsidence, climate, cropType) {
   let recommendations = []
   let details = {}
 
-  // ANÁLISIS NDVI ESPECÍFICO POR CULTIVO
-  let ndviStatus = ''
-  let ndviPenalty = 0
-  
-  // Rangos específicos por cultivo
-  const cropRanges = {
+  // RANGOS NDVI CORREGIDOS SEGÚN TU BASE DE DATOS DE SUPABASE
+  const cropNDVIRanges = {
+    'Arroz': { excellent: 0.80, good: 0.60, regular: 0.40, bad: 0.20 }, // CORREGIDO
     'Café': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
     'Tomate': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
     'Maíz': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
-    'Arroz': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
-    'Papa': { excellent: 0.60, good: 0.45, regular: 0.30, bad: 0.20 }
+    'Papa': { excellent: 0.60, good: 0.45, regular: 0.30, bad: 0.20 },
+    'Frijol': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+    'Cebolla': { excellent: 0.50, good: 0.35, regular: 0.25, bad: 0.15 },
+    'Lechuga': { excellent: 0.65, good: 0.50, regular: 0.35, bad: 0.20 },
+    'Aguacate': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+    'Banano': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+    'Caña de Azúcar': { excellent: 0.80, good: 0.65, regular: 0.50, bad: 0.35 },
+    'Soja': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 },
+    'Trigo': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+    'Girasol': { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 },
+    'Cacao': { excellent: 0.75, good: 0.60, regular: 0.45, bad: 0.30 }
   }
   
-  const ranges = cropRanges[cropType] || { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 }
+  const ranges = cropNDVIRanges[cropType] || { excellent: 0.70, good: 0.55, regular: 0.40, bad: 0.25 }
+  
+  // ANÁLISIS NDVI CON RANGOS CORRECTOS
+  let ndviStatus = ''
+  let ndviPenalty = 0
   
   if (ndvi >= ranges.excellent) {
     ndviStatus = 'EXCELENTE'
@@ -176,9 +186,8 @@ function analyzeCropConditions(ndvi, subsidence, climate, cropType) {
   // Recomendaciones NDVI específicas
   if (ndviStatus === 'CRÍTICO') {
     recommendations.push(`🚨 URGENTE: NDVI crítico (${Math.round(ndvi * 100)}%) en ${cropType}. Implementar riego de emergencia y revisar sistema de irrigación inmediatamente.`)
-    recommendations.push(`💧 Aplicar fertilización foliar rica en nitrógeno para recuperar la vegetación.`)
   } else if (ndviStatus === 'MALO') {
-    recommendations.push(`⚠️ NDVI bajo (${Math.round(ndvi * 100)}%) para ${cropType}. Aumentar riego, revisar nutrición del suelo y considerar tratamiento de plagas.`)
+    recommendations.push(`⚠️ NDVI malo (${Math.round(ndvi * 100)}%) para ${cropType}. Aumentar riego, revisar nutrición del suelo y considerar tratamiento de plagas.`)
   } else if (ndviStatus === 'REGULAR') {
     recommendations.push(`🌱 NDVI regular (${Math.round(ndvi * 100)}%) para ${cropType}. Aumentar frecuencia de riego y considerar fertilización de mantenimiento.`)
   } else if (ndviStatus === 'BUENO') {
@@ -195,100 +204,105 @@ function analyzeCropConditions(ndvi, subsidence, climate, cropType) {
   if (absSubsidence <= 1) {
     subsidenceStatus = 'ESTABLE'
     subsidencePenalty = 0
-  } else if (absSubsidence <= 2) {
+  } else if (absSubsidence <= 3) {
     subsidenceStatus = 'LIGERAMENTE INESTABLE'
-    subsidencePenalty = 5
-  } else if (absSubsidence <= 4) {
-    subsidenceStatus = 'MODERADAMENTE INESTABLE'
-    subsidencePenalty = 15
+    subsidencePenalty = 10
   } else if (absSubsidence <= 6) {
-    subsidenceStatus = 'INESTABLE'
-    subsidencePenalty = 25
+    subsidenceStatus = 'MODERADAMENTE INESTABLE'
+    subsidencePenalty = 20
   } else {
     subsidenceStatus = 'CRÍTICO'
-    subsidencePenalty = 40
+    subsidencePenalty = 35
   }
   
   score -= subsidencePenalty
   details.subsidence = { value: subsidence, status: subsidenceStatus, penalty: subsidencePenalty }
   
   if (subsidenceStatus === 'CRÍTICO') {
-    recommendations.push(`🚨 SUBSIDENCIA CRÍTICA: ${subsidence} mm/año. Revisar inmediatamente sistemas de riego por posibles rupturas y considerar reubicación del cultivo.`)
-  } else if (subsidenceStatus === 'INESTABLE') {
-    recommendations.push(`⚠️ SUBSIDENCIA ALTA: ${subsidence} mm/año. Monitorear sistemas de riego y estructuras agrícolas mensualmente.`)
+    recommendations.push(`🚨 SUBSIDENCIA CRÍTICA: ${subsidence} mm/año. Revisar inmediatamente sistemas de riego por posibles rupturas.`)
   } else if (subsidenceStatus === 'MODERADAMENTE INESTABLE') {
     recommendations.push(`📊 SUBSIDENCIA MODERADA: ${subsidence} mm/año. Terreno moderadamente inestable, monitoreo preventivo cada 3 meses.`)
   } else if (subsidenceStatus === 'LIGERAMENTE INESTABLE') {
     recommendations.push(`📈 SUBSIDENCIA LEVE: ${subsidence} mm/año. Terreno ligeramente inestable, monitoreo preventivo cada 6 meses.`)
   } else {
-    recommendations.push(`✅ TERRENO ESTABLE: ${subsidence} mm/año. Excelente estabilidad para ${cropType}. Condiciones ideales para infraestructura agrícola.`)
+    recommendations.push(`✅ TERRENO ESTABLE: ${subsidence} mm/año. Excelente estabilidad para ${cropType}.`)
   }
 
-  // ANÁLISIS CLIMA REAL Y DETALLADO
+  // TEMPERATURA CON RANGOS ÚNICOS Y CONSISTENTES (SIN CONTRADICCIONES)
   let tempPenalty = 0
-  let humidityPenalty = 0
   
   if (climate && climate.temperature !== null) {
-    // Rangos de temperatura específicos por cultivo
-    const tempOptimal = {
-      'Café': { min: 18, max: 24 },
-      'Tomate': { min: 18, max: 27 },
-      'Maíz': { min: 20, max: 30 },
-      'Arroz': { min: 25, max: 35 },
-      'Papa': { min: 15, max: 20 }
+    // RANGOS ÚNICOS DE TEMPERATURA SEGÚN TU BASE DE DATOS
+    const tempRanges = {
+      'Arroz': { min: 20, max: 35, optimal_min: 25, optimal_max: 30 },
+      'Café': { min: 15, max: 28, optimal_min: 18, optimal_max: 24 },
+      'Tomate': { min: 15, max: 30, optimal_min: 18, optimal_max: 27 },
+      'Maíz': { min: 15, max: 35, optimal_min: 20, optimal_max: 30 },
+      'Papa': { min: 10, max: 25, optimal_min: 15, optimal_max: 20 },
+      'Frijol': { min: 18, max: 30, optimal_min: 20, optimal_max: 27 },
+      'Cebolla': { min: 12, max: 30, optimal_min: 15, optimal_max: 25 },
+      'Lechuga': { min: 10, max: 24, optimal_min: 15, optimal_max: 20 },
+      'Aguacate': { min: 18, max: 28, optimal_min: 20, optimal_max: 25 },
+      'Banano': { min: 20, max: 35, optimal_min: 25, optimal_max: 30 },
+      'Caña de Azúcar': { min: 20, max: 35, optimal_min: 25, optimal_max: 32 },
+      'Soja': { min: 18, max: 32, optimal_min: 22, optimal_max: 28 },
+      'Trigo': { min: 12, max: 25, optimal_min: 15, optimal_max: 22 },
+      'Girasol': { min: 18, max: 30, optimal_min: 20, optimal_max: 27 },
+      'Cacao': { min: 20, max: 32, optimal_min: 24, optimal_max: 28 }
     }
     
-    const tempRange = tempOptimal[cropType] || { min: 18, max: 26 }
+    const tempRange = tempRanges[cropType] || { min: 15, max: 30, optimal_min: 18, optimal_max: 25 }
     
-    if (climate.temperature < tempRange.min - 5) {
+    if (climate.temperature < tempRange.min) {
       tempPenalty = 25
-      recommendations.push(`❄️ TEMPERATURA MUY BAJA: ${climate.temperature}°C está muy por debajo del rango óptimo para ${cropType} (${tempRange.min}-${tempRange.max}°C). Protección térmica urgente.`)
-    } else if (climate.temperature < tempRange.min) {
-      tempPenalty = 15
-      recommendations.push(`🌡️ TEMPERATURA BAJA: ${climate.temperature}°C está por debajo del rango óptimo para ${cropType} (${tempRange.min}-${tempRange.max}°C). Considerar protección térmica.`)
-    } else if (climate.temperature > tempRange.max + 5) {
-      tempPenalty = 25
-      recommendations.push(`🔥 TEMPERATURA MUY ALTA: ${climate.temperature}°C supera significativamente el rango óptimo para ${cropType}. Implementar sombreado y riego intensivo urgente.`)
+      recommendations.push(`❄️ TEMPERATURA BAJA: ${climate.temperature}°C está por debajo del rango seguro para ${cropType} (mínimo: ${tempRange.min}°C). Protección térmica necesaria.`)
     } else if (climate.temperature > tempRange.max) {
-      tempPenalty = 15
-      recommendations.push(`🔥 TEMPERATURA ALTA: ${climate.temperature}°C supera el rango óptimo para ${cropType}. Implementar sombreado y aumentar frecuencia de riego.`)
+      tempPenalty = 25
+      recommendations.push(`🔥 TEMPERATURA ALTA: ${climate.temperature}°C supera el rango seguro para ${cropType} (máximo: ${tempRange.max}°C). Implementar sombreado urgente.`)
+    } else if (climate.temperature >= tempRange.optimal_min && climate.temperature <= tempRange.optimal_max) {
+      tempPenalty = 0
+      recommendations.push(`🌡️ TEMPERATURA ÓPTIMA: ${climate.temperature}°C es ideal para ${cropType} (rango: ${tempRange.optimal_min}-${tempRange.optimal_max}°C). Mantener condiciones actuales.`)
     } else {
-      recommendations.push(`🌡️ TEMPERATURA ÓPTIMA: ${climate.temperature}°C es ideal para ${cropType} (rango: ${tempRange.min}-${tempRange.max}°C). Mantener condiciones actuales.`)
+      tempPenalty = 10
+      recommendations.push(`🌡️ TEMPERATURA ACEPTABLE: ${climate.temperature}°C para ${cropType}. Dentro del rango tolerable (${tempRange.min}-${tempRange.max}°C).`)
     }
     
     score -= tempPenalty
     details.temperature = { value: climate.temperature, penalty: tempPenalty }
   }
 
+  // ANÁLISIS HUMEDAD
+  let humidityPenalty = 0
+  
   if (climate && climate.humidity !== null) {
     if (climate.humidity < 40) {
       humidityPenalty = 15
-      recommendations.push(`💧 HUMEDAD MUY BAJA: ${climate.humidity}% puede causar estrés hídrico en ${cropType}. Aumentar riego y considerar humidificación del ambiente.`)
+      recommendations.push(`💧 HUMEDAD BAJA: ${climate.humidity}% puede causar estrés hídrico en ${cropType}. Aumentar riego.`)
     } else if (climate.humidity > 85) {
       humidityPenalty = 10
-      recommendations.push(`☔ HUMEDAD MUY ALTA: ${climate.humidity}% puede favorecer desarrollo de hongos en ${cropType}. Mejorar ventilación y aplicar fungicidas preventivos.`)
+      recommendations.push(`☔ HUMEDAD ALTA: ${climate.humidity}% puede favorecer hongos en ${cropType}. Mejorar ventilación.`)
     } else if (climate.humidity >= 60 && climate.humidity <= 75) {
-      recommendations.push(`💧 HUMEDAD ÓPTIMA: ${climate.humidity}% es perfecta para ${cropType}. Continuar monitoreo regular.`)
+      recommendations.push(`💧 HUMEDAD ADECUADA: ${climate.humidity}% es perfecta para ${cropType}.`)
     }
     
     score -= humidityPenalty
     details.humidity = { value: climate.humidity, penalty: humidityPenalty }
   }
 
-  // PUNTUACIÓN FINAL CON LÍMITES REALISTAS
+  // PUNTUACIÓN FINAL
   score = Math.max(15, Math.min(100, score))
   
   let scoreLevel = ''
   if (score >= 85) scoreLevel = 'EXCELENTE'
   else if (score >= 70) scoreLevel = 'BUENO'
   else if (score >= 50) scoreLevel = 'REGULAR'
-  else if (score >= 30) scoreLevel = 'CRÍTICO'
-  else scoreLevel = 'REQUIERE ATENCIÓN URGENTE'
+  else if (score >= 30) scoreLevel = 'MALO'
+  else scoreLevel = 'CRÍTICO'
   
   return {
     score: score,
     scoreLevel: scoreLevel,
-    recommendations: recommendations.slice(0, 6), // Máximo 6 recomendaciones
+    recommendations: recommendations.slice(0, 6),
     details: details
   }
 }
